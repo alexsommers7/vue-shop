@@ -1,0 +1,115 @@
+.row.products {
+  margin: 0 auto;
+  padding: 1rem;
+
+  @include respond(desk-small) {
+    padding: 2.5rem;
+  }
+
+  @include respond(desk-medium) {
+    padding: 2rem 5rem 5rem;
+  }
+}
+.product {
+  background-color: #fff;
+  box-shadow: $design-box-shadow-default;
+  border-radius: 3px;
+  font-size: 1.6rem;
+  text-align: center;
+  position: relative;
+  font-family: $font-family-main;
+  margin: 1.1rem 0;
+  max-width: 100%;
+  width: 100%;
+  flex: 0 0 100%;
+
+  @include respond(tab-port) {
+    max-width: 48%;
+    width: 48%;
+    flex: 0 0 48%;
+    margin: 1.1rem 1%;
+  }
+
+  @include respond(tab-land) {
+    max-width: 31%;
+    width: 31%;
+    flex: 0 0 31%;
+  }
+
+  @include respond(desk-medium) {
+    max-width: 23%;
+    width: 23%;
+    flex: 0 0 23%;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  &__img {
+    object-fit: contain;
+    height: 300px;
+    width: 100%;
+    background-color: #fff;
+    padding: 1rem;
+
+    @include respond(tab-land) {
+      height: 350px;
+    }
+  }
+
+  &__data {
+    padding: 1rem 1rem 6.5rem; // extra on bottom for abs positioned button
+  }
+
+  &__name,
+  &__price,
+  &__category {
+    text-align: left;
+  }
+
+  &__category {
+    font-weight: 300;
+    font-size: 1rem;
+    text-transform: uppercase;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 30px;
+      border-bottom: 1px solid $color-primary;
+    }
+  }
+
+  &__name {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 0.5rem; // extra on top to account for separator
+    color: $color-primary;
+    font-weight: 600;
+
+    &:hover {
+      color: rgba($color-primary, 0.85);
+    }
+  }
+
+  &__price {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+
+  &__btn {
+    position: absolute;
+    bottom: 1rem;
+    margin: 1rem auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+
+    @include respond(desk-medium) {
+      width: 50%;
+    }
+  }
+}

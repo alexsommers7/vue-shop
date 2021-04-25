@@ -1,0 +1,37 @@
+.filter {
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto 2rem;
+    width: 100%;
+    transition: opacity 0.8s;
+
+    @include respond(desk-small) {
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      margin: 0 auto 8rem;
+    }
+  }
+
+  &__categories {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    margin-bottom: 1rem;
+
+    @include respond(desk-small) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__category {
+    margin: 0 0.5rem;
+
+    @include respond(desk-small) {
+      margin: 0 0.75rem;
+    }
+  }
+}
