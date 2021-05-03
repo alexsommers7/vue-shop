@@ -22,6 +22,7 @@
   max-width: 100%;
   width: 100%;
   flex: 0 0 100%;
+  transition: all 1s;
 
   @include respond(tab-port) {
     max-width: 48%;
@@ -112,4 +113,21 @@
       width: 50%;
     }
   }
+}
+
+.list-item,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s;
+}
+.list-enter-active {
+  transition-delay: 0.75s;
+}
+
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 0.5s;
 }

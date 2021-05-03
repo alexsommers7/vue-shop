@@ -1,31 +1,33 @@
 <template>
-  <div class="row products text-center">
-    <article
-      v-for="product in filteredProductList"
-      :key="product.id"
-      class="product columns"
-      :data-category="product.category"
-      :data-price="product.price"
-    >
-      <a href="#"><img class="product__img" :src="product.image" :alt="product.title"/></a>
-      <div class="product__data">
-        <p class="product__category">{{ product.category }}</p>
-        <a href="#">
-          <h3 class="product__name" :title="product.title">{{ product.title | truncTitle }}</h3>
-        </a>
-        <p class="product__price">${{ product.price | formatPrice }}</p>
-        <a
-          class="btn btn--primary product__btn"
-          href=""
-          :title="`See Details - ${product.title}`"
-          :data-image="product.image"
-          :data-description="product.description"
-          @click="onDetailsSelect"
-        >
-          See Details
-        </a>
-      </div>
-    </article>
+  <div>
+    <transition-group name="list" tag="div" class="row products text-center" mode="in-out">
+      <article
+        v-for="product in filteredProductList"
+        :key="product.id"
+        class="product columns list-item"
+        :data-category="product.category"
+        :data-price="product.price"
+      >
+        <a href="#"><img class="product__img" :src="product.image" :alt="product.title"/></a>
+        <div class="product__data">
+          <p class="product__category">{{ product.category }}</p>
+          <a href="#">
+            <h3 class="product__name" :title="product.title">{{ product.title | truncTitle }}</h3>
+          </a>
+          <p class="product__price">${{ product.price | formatPrice }}</p>
+          <a
+            class="btn btn--primary product__btn"
+            href=""
+            :title="`See Details - ${product.title}`"
+            :data-image="product.image"
+            :data-description="product.description"
+            @click="onDetailsSelect"
+          >
+            See Details
+          </a>
+        </div>
+      </article>
+    </transition-group>
     <div class="modal" @click="closeModal">
       <div class="modal__content">
         <button class="modal__close">x</button>
