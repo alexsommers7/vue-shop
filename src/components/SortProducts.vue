@@ -1,5 +1,5 @@
 <template>
-  <div class="shop__sort columns small-12 large-1">
+  <div class="columns small-6 large-1 nav__sort">
     <p>Sort by:</p>
     <form name="sort__form" action="">
       <select class="sort__select" name="sort__select" @change="onProductSort">
@@ -25,10 +25,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.shop__sort {
-  width: 13rem;
-  max-width: 13rem;
-  flex: 0 0 13rem;
-}
-</style>
+<style scoped></style>

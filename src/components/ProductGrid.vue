@@ -8,23 +8,51 @@
         :data-category="product.category"
         :data-price="product.price"
       >
-        <a href="#"><img class="product__img" :src="product.image" :alt="product.title"/></a>
-        <div class="product__data">
-          <p class="product__category">{{ product.category }}</p>
-          <a href="#">
-            <h3 class="product__name" :title="product.title">{{ product.title | truncTitle }}</h3>
-          </a>
-          <p class="product__price">${{ product.price | formatPrice }}</p>
-          <a
-            class="btn btn--primary product__btn"
-            href=""
-            :title="`See Details - ${product.title}`"
+        <a href="#"
+          ><img
+            class="product__img"
+            :src="product.image"
+            :alt="product.title"
+            :title="`See details - ${product.title}`"
             :data-image="product.image"
             :data-description="product.description"
             @click="onDetailsSelect"
-          >
-            See Details
+        /></a>
+
+        <div class="product__data">
+          <p class="product__category">{{ product.category }}</p>
+          <a href="#">
+            <h3
+              class="product__name"
+              :title="`See details - ${product.title}`"
+              :data-image="product.image"
+              :data-description="product.description"
+              @click="onDetailsSelect"
+            >
+              {{ product.title | truncTitle }}
+            </h3>
           </a>
+          <p class="product__price">${{ product.price | formatPrice }}</p>
+          <button
+            class="btn columns small-8 btn--primary product__btn product__btn--add-to-cart"
+            :title="`Add to cart - ${product.title}`"
+            :data-id="product.id"
+            @click="onAddToCart"
+          >
+            Add To Cart
+          </button>
+          <div class="quantity">
+            <button class="quantity__minus" @click="onAdjustQuantity">-</button>
+            <input
+              type="text"
+              value="1"
+              class="quantity__value"
+              @change="onAdjustQuantity"
+              onkeydown="return false;"
+              tabindex="-1"
+            />
+            <button class="quantity__plus" @click="onAdjustQuantity">+</button>
+          </div>
         </div>
       </article>
     </transition-group>
@@ -80,6 +108,27 @@ export default {
       this.selectedDescription = event.target.dataset.description;
       this.$el.querySelector(".modal").classList.add("active");
     },
+    onAddToCart(event) {
+      let cartItem = this.products.find((product) => product.id === +event.target.dataset.id);
+      let itemQuantity = event.target.parentElement.querySelector(".quantity__value");
+      this.$emit("addToCart", cartItem, itemQuantity.value);
+      itemQuantity.value = 1; // reset
+    },
+    onAdjustQuantity(event) {
+      if (event.target.classList.contains("quantity__plus")) this.incrementQuantity(event);
+      else if (event.target.classList.contains("quantity__minus")) this.decrementQuantity(event);
+    },
+    incrementQuantity(event) {
+      event.target.previousElementSibling.value++;
+      event.target.previousElementSibling.previousElementSibling.disabled = false;
+    },
+    decrementQuantity(event) {
+      event.target.nextElementSibling.value--;
+      if (event.target.nextElementSibling.value <= 1) {
+        event.target.nextElementSibling.value = 1;
+        event.target.disabled = true;
+      }
+    },
     closeModal(event) {
       if (event.target.classList.contains("modal") || event.target.classList.contains("modal__close")) {
         this.$el.querySelector(".modal").classList.remove("active");
@@ -98,9 +147,7 @@ export default {
   filters: {
     formatPrice: (price) => {
       const priceString = price.toString();
-      const decimal = priceString.split(".")[1];
-      const length = decimal && decimal.length > 2 ? decimal.length : 2;
-      return Number(priceString).toFixed(length);
+      return Number(priceString).toFixed(2);
     },
     truncTitle: (title) => {
       const maxChars = 50;
@@ -114,4 +161,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.list-item,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s;
+}
+.list-enter-active {
+  transition-delay: 0.75s;
+}
+
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 0.5s;
+}
+</style>

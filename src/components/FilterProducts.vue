@@ -1,5 +1,5 @@
 <template>
-  <div class="columns small-12 large-8">
+  <div class="columns small-11 medium-10 large-8 nav__filter">
     <ul class="row align-middle filter__categories">
       <li class="filter__category">
         <button class="btn btn--filter btn--primary" data-filter="all" @click="filter">

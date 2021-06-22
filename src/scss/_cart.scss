@@ -1,0 +1,207 @@
+.cart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  @include respond(ipad) {
+    padding: 1.5rem 0 0.7rem;
+  }
+
+  @include respond(desk-medium) {
+    padding: 1rem 0 0.7rem;
+  }
+
+  &__wrapper {
+    padding-right: 1.5rem;
+
+    @include respond(desk-large) {
+      padding-right: 0.9375rem;
+    }
+  }
+
+  &__button {
+    position: relative;
+    z-index: 30;
+  }
+
+  &__icon,
+  &__counter {
+    transition: opacity 0.2s;
+  }
+
+  &__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    fill: $color-primary;
+
+    &:hover {
+      opacity: 0.85;
+
+      & ~ .cart__counter {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  &__counter {
+    align-self: flex-start;
+    position: absolute;
+    top: 36.5%;
+    left: 52%;
+    transform: translate(-50%, -90%);
+    width: 1.15rem;
+    height: 1.15rem;
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-white;
+  }
+
+  &__dropdown {
+    background-color: $color-background;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    width: 90%;
+    box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.1);
+    padding: 0 1.5rem;
+    max-height: 25vh;
+    overflow-y: auto;
+    list-style: none;
+    z-index: 35;
+    border-top: 1px solid #ccc;
+    transition: all 0.25s cubic-bezier(0.61, 1, 0.88, 1);
+
+    @include respond(tab-land) {
+      width: 40%;
+      left: unset;
+      transform: translate(0, 0);
+      right: 2rem;
+      max-height: 75vh;
+    }
+
+    @include respond(desk-small) {
+      border-top: none;
+    }
+
+    @include respond(desk-medium) {
+      right: 6rem;
+      width: 33%;
+    }
+
+    &--empty {
+      font-size: 1rem;
+      padding: 1rem;
+      width: 90%;
+
+      @include respond(tab-land) {
+        width: 40%;
+      }
+
+      @include respond(desk-medium) {
+        width: 20%;
+      }
+    }
+  }
+
+  &__backdrop {
+    opacity: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    transition: opacity 0.5s;
+  }
+
+  &__quantity {
+    opacity: 0.6;
+    font-size: 0.75rem;
+  }
+
+  &__price {
+    margin-right: 15%;
+    font-weight: bold;
+  }
+
+  &__remove {
+    color: red;
+    font-size: 0.75rem;
+  }
+
+  &__item {
+    padding: 1.5rem 0.25rem 1rem;
+    margin: 0.5rem 0 0;
+    border-top: 1px solid rgba($color-text, 0.15);
+
+    &:first-child {
+      border-top: none;
+      padding-top: 0.5rem;
+    }
+
+    &:last-child {
+      padding-bottom: 2rem;
+    }
+
+    & img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+    }
+
+    & > span {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__total {
+    font-weight: bold;
+    width: 100%;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+
+  .cart-toast {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 4rem;
+    background-color: #e1faea;
+    padding: 1rem 2rem;
+    width: 20rem;
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    transition: all 0.3s;
+    animation: toast 0.5s ease;
+
+    & svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: $color-text;
+      margin-right: 1rem;
+    }
+  }
+}
+
+@keyframes toast {
+  0% {
+    transform: translate(-50%, 2rem);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}

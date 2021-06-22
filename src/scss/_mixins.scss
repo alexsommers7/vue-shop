@@ -10,6 +10,11 @@
       @content;
     } // 900px
   }
+  @if $breakpoint == ipad {
+    @media only screen and (min-width: 64em) {
+      @content;
+    } // 1024px
+  }
   @if $breakpoint == desk-small {
     @media only screen and (min-width: 75em) {
       @content;

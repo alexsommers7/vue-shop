@@ -13,10 +13,11 @@
   background-color: rgba($color-text, 0.7);
   transform-origin: center;
   overflow-y: scroll;
+  z-index: 15;
   transition: all 0.2s;
 
   &.active {
-    z-index: 500;
+    z-index: 40;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;

@@ -60,7 +60,7 @@
   }
 
   &__data {
-    padding: 1rem 1rem 6.5rem; // extra on bottom for abs positioned button
+    padding: 1rem 1rem 5.25rem; // extra on bottom for abs positioned button
   }
 
   &__name,
@@ -115,19 +115,33 @@
   }
 }
 
-.list-item,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s;
-}
-.list-enter-active {
-  transition-delay: 0.75s;
-}
+/* Quantity Box*/
+.quantity {
+  display: flex;
+  margin-top: 1rem;
 
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
-}
-.list-move {
-  transition: transform 0.5s;
+  &__minus,
+  &__plus {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: $color-background;
+    border-radius: $design-border-radius-default;
+    padding: 5px 5px 8px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  input {
+    height: 30px;
+    width: 43px;
+    text-align: center;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: $design-border-radius-default;
+    display: inline-block;
+  }
 }
