@@ -140,8 +140,7 @@ export default {
         : (this.isScrolling = false);
     },
     scrollToTop() {
-      document.body.scrollTop = 0; // safari
-      document.documentElement.scrollTop = 0; // chrome, firefox, and Opera
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
   },
   filters: {
