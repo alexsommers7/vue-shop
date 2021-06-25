@@ -35,6 +35,7 @@
     <ProductGrid
       :products="products"
       :selectedCategory="selectedCategory"
+      :renderedNavHeight="renderedNavHeight"
       @addToCart="onAddToCart"
       ref="productGrid"
     ></ProductGrid>
@@ -58,6 +59,7 @@ export default {
       nonUniqueCartItems: 0,
       removingFromCart: false,
       total: 0,
+      renderedNavHeight: 0,
     };
   },
   methods: {
@@ -165,6 +167,14 @@ export default {
         this.finishLoading();
       });
   },
+  mounted() {
+    let that = this;
+    function checkNavHeight() {
+      that.renderedNavHeight = that.$el.querySelector(".nav").getBoundingClientRect().height;
+    }
+    checkNavHeight();
+    window.addEventListener("resize", checkNavHeight);
+  },
   components: {
     ProductGrid,
     FilterProducts,
@@ -173,7 +183,7 @@ export default {
   },
 };
 
-// implementing fallback JSON for demo purposes as fake store api has been unreliable
+// implementing static fallback JSON for demo purposes as fake store api has been unreliable
 let fallbackJSON = [
   {
     id: 1,

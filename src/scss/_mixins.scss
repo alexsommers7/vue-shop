@@ -36,3 +36,9 @@
     } // 2000px
   }
 }
+
+@mixin motionless {
+  @media (prefers-reduced-motion) {
+    @content;
+  }
+}

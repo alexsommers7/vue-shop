@@ -15,10 +15,11 @@
             :alt="product.title"
             :title="`See details - ${product.title}`"
             :data-image="product.image"
+            :data-title="product.title"
+            :data-price="product.price"
             :data-description="product.description"
             @click="onDetailsSelect"
         /></a>
-
         <div class="product__data">
           <p class="product__category">{{ product.category }}</p>
           <a href="#">
@@ -26,6 +27,8 @@
               class="product__name"
               :title="`See details - ${product.title}`"
               :data-image="product.image"
+              :data-title="product.title"
+              :data-price="product.price"
               :data-description="product.description"
               @click="onDetailsSelect"
             >
@@ -61,7 +64,15 @@
         <button class="modal__close">x</button>
         <div class="modal__description">
           <img class="modal__image" :src="selectedImagePath" />
-          <p class="modal__text">{{ selectedDescription }}</p>
+          <div class="modal__text-content">
+            <div class="modal__title__price">
+              <p class="modal__title">
+                <strong>{{ selectedTitle }}</strong>
+              </p>
+              <p class="modal__price">${{ selectedPrice | formatPrice }}</p>
+            </div>
+            <p class="modal__text">{{ selectedDescription }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -84,6 +95,8 @@ export default {
   data() {
     return {
       selectedImagePath: "",
+      selectedTitle: "",
+      selectedPrice: "",
       selectedDescription: "",
       isScrolling: false,
     };
@@ -96,15 +109,30 @@ export default {
         return product.category === vm.selectedCategory;
       });
     },
+    navHeight() {
+      return `${this.renderedNavHeight}px`;
+    },
+  },
+  watch: {
+    navHeight: {
+      handler: function() {
+        const modal = this.$el.querySelector(".modal");
+        modal.style.top = this.navHeight;
+        modal.style.height = `calc(100% - ${this.navHeight})`;
+      },
+    },
   },
   props: {
     products: Array,
     selectedCategory: String,
+    renderedNavHeight: Number,
   },
   methods: {
     onDetailsSelect(event) {
       event.preventDefault();
       this.selectedImagePath = event.target.dataset.image;
+      this.selectedTitle = event.target.dataset.title;
+      this.selectedPrice = event.target.dataset.price;
       this.selectedDescription = event.target.dataset.description;
       this.$el.querySelector(".modal").classList.add("active");
     },
@@ -154,8 +182,7 @@ export default {
     },
   },
   mounted() {
-    const vm = this;
-    window.addEventListener("scroll", vm.detectScroll);
+    window.addEventListener("scroll", this.detectScroll);
   },
 };
 </script>

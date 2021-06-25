@@ -12,3 +12,11 @@
 .full-width {
   max-width: none !important;
 }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

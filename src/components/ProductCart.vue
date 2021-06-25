@@ -110,7 +110,7 @@ export default {
         this.showDropdown = this.toastOn = true;
         setTimeout(function() {
           that.toastOn = false;
-        }, 1000);
+        }, 2500);
       },
     },
   },
@@ -156,24 +156,26 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-  transform: translate(-50%, -20px);
+  transform: translate(-50%, -15px);
+  border-top: none;
 }
 .fade-enter-to,
 .fade-leave {
   opacity: 1;
   transform: translate(-50%, 0);
+  border-top: 1px solid #ccc;
 }
 
 @media screen and (min-width: 56.25em) {
   .fade-enter,
   .fade-leave-to {
-    opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-15px);
+    border-top: none;
   }
   .fade-enter-to,
   .fade-leave {
-    opacity: 1;
     transform: translateY(0);
+    border-top: none;
   }
 }
 </style>
