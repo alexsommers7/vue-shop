@@ -99,6 +99,10 @@
     width: 13rem;
     max-width: 13rem;
     flex: 0 0 13rem;
+
+    @include respond(desk-small) {
+      margin-left: auto;
+    }
   }
 
   &__button {

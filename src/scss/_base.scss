@@ -43,19 +43,3 @@ img {
   height: auto;
   transition: all 1s;
 }
-
-section {
-  padding: $layout-section-padding-small;
-  max-width: $layout-max-width;
-  margin: auto;
-  font-size: 1.6rem;
-  position: relative;
-
-  @include respond(tab-land) {
-    padding: $layout-section-padding-medium;
-  }
-
-  @include respond(desk-small) {
-    padding: $layout-section-padding-large;
-  }
-}

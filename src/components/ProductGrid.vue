@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section>
     <transition-group name="list" tag="div" class="row products text-center" mode="in-out">
       <article
         v-for="product in filteredProductList"
@@ -12,7 +12,7 @@
           ><img
             class="product__img"
             :src="product.image"
-            :alt="product.title"
+            :alt="`Image of ${product.title}`"
             :title="`See details - ${product.title}`"
             :data-image="product.image"
             :data-title="product.title"
@@ -46,10 +46,12 @@
           </button>
           <div class="quantity">
             <button class="quantity__minus" @click="onAdjustQuantity">-</button>
+            <label :for="product.id" class="screen-reader-only">Quantity</label>
             <input
               type="text"
               value="1"
               class="quantity__value"
+              :id="product.id"
               @change="onAdjustQuantity"
               onkeydown="return false;"
               tabindex="-1"
@@ -86,7 +88,7 @@
         </symbol>
       </svg>
     </button>
-  </div>
+  </section>
 </template>
 
 <script>
