@@ -1,6 +1,6 @@
 <template>
   <div class="columns small-11 medium-10 large-8 nav__filter">
-    <ul class="row align-middle filter__categories">
+    <ul class="row filter__categories">
       <li class="filter__category">
         <button class="btn btn--filter btn--primary" data-filter="all" @click="filter">
           Show All
@@ -30,9 +30,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.shop__categories {
-  list-style: none;
-  padding: 0 1rem;
-}
-</style>
+<style scoped></style>

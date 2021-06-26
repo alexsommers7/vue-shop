@@ -193,15 +193,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .list-item,
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s;
-
-  @media (prefers-reduced-motion) {
-    transition: all 0s;
-  }
 }
 .list-enter-active {
   transition-delay: 0.75s;
@@ -214,9 +210,5 @@ export default {
 }
 .list-move {
   transition: transform 0.5s;
-
-  @media (prefers-reduced-motion) {
-    transition: transform 0s;
-  }
 }
 </style>
