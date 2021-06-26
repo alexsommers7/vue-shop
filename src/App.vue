@@ -61,7 +61,7 @@ export default {
     return {
       products: [],
       categories: [],
-      cartItems: [],
+      cartItems: JSON.parse(localStorage.getItem("cart") || "[]"),
       selectedCategory: "all",
       nonUniqueCartItems: 0,
       total: 0,
@@ -173,8 +173,8 @@ export default {
       localStorage.setItem("cart", JSON.stringify(this.cartItems));
     },
     checkLocalStorage() {
-      this.cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
       this.calculateNonUniqueItems();
+      this.calculateTotal();
     },
   },
   created() {
