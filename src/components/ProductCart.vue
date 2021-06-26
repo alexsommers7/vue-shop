@@ -27,12 +27,12 @@
                   -
                 </button>
                 <input
-                  type="text"
+                  type="number"
+                  min="1"
+                  :data-id="cartItem.id"
                   :value="cartItem.quantity || '1'"
                   class="quantity__value"
                   @change="onAdjustQuantity"
-                  onkeydown="return false;"
-                  tabindex="-1"
                 />
                 <button class="quantity__plus" :data-id="cartItem.id" @click="onAdjustQuantity">+</button>
               </div>
@@ -89,12 +89,15 @@ export default {
       this.$emit("onRemoveFromCart", event.target.dataset.id);
     },
     onAdjustQuantity(event) {
+      console.log("change detected");
       if (event.target.classList.contains("quantity__plus")) {
         this.incrementQuantity(event);
         this.$emit("onCartQuantityChange", event.target.dataset.id, event.target.previousElementSibling.value);
       } else if (event.target.classList.contains("quantity__minus")) {
         this.decrementQuantity(event);
         this.$emit("onCartQuantityChange", event.target.dataset.id, event.target.nextElementSibling.value);
+      } else {
+        if (event.target.value > 0) this.$emit("onCartQuantityChange", event.target.dataset.id, event.target.value);
       }
     },
     incrementQuantity(event) {
@@ -103,6 +106,7 @@ export default {
     },
     decrementQuantity(event) {
       event.target.nextElementSibling.value--;
+      console.log(event.target.nextElementSibling);
       if (event.target.nextElementSibling.value <= 1) event.target.disabled = true;
     },
   },

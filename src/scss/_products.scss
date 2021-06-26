@@ -123,7 +123,7 @@
 
   &__minus,
   &__plus {
-    appearance: none;
+    -webkit-appearance: none;
     width: 30px;
     height: 30px;
     background: $color-background;
@@ -144,5 +144,17 @@
     border: 1px solid #ddd;
     border-radius: $design-border-radius-default;
     display: inline-block;
+
+    // Disable number arrows
+    &::-webkit-outer-spin-button, // Chrome, safari, edge, opera
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type="number"] {
+      // firefox
+      -moz-appearance: textfield;
+    }
   }
 }

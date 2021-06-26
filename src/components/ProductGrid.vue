@@ -36,6 +36,19 @@
             </h3>
           </a>
           <p class="product__price">{{ product.price | formatUSPrice }}</p>
+          <div class="quantity">
+            <label :for="product.id" class="screen-reader-only">Quantity</label>
+            <button class="quantity__minus" @click="onAdjustQuantity">-</button>
+            <input
+              type="number"
+              value="1"
+              min="1"
+              class="quantity__value"
+              :id="product.id"
+              @change="onAdjustQuantity"
+            />
+            <button class="quantity__plus" @click="onAdjustQuantity">+</button>
+          </div>
           <button
             class="btn columns small-8 btn--primary product__btn product__btn--add-to-cart"
             :title="`Add to cart - ${product.title}`"
@@ -44,20 +57,6 @@
           >
             Add To Cart
           </button>
-          <div class="quantity">
-            <button class="quantity__minus" @click="onAdjustQuantity">-</button>
-            <label :for="product.id" class="screen-reader-only">Quantity</label>
-            <input
-              type="text"
-              value="1"
-              class="quantity__value"
-              :id="product.id"
-              @change="onAdjustQuantity"
-              onkeydown="return false;"
-              tabindex="-1"
-            />
-            <button class="quantity__plus" @click="onAdjustQuantity">+</button>
-          </div>
         </div>
       </article>
     </transition-group>
@@ -139,10 +138,11 @@ export default {
       this.$el.querySelector(".modal").classList.add("active");
     },
     onAddToCart(event) {
+      let qtyInput = event.target.parentElement.querySelector(".quantity__value");
+      if (qtyInput.value < 1) return (qtyInput.value = 1);
       let cartItem = this.products.find((product) => product.id === +event.target.dataset.id);
-      let itemQuantity = event.target.parentElement.querySelector(".quantity__value");
-      this.$emit("addToCart", cartItem, itemQuantity.value);
-      itemQuantity.value = 1; // reset
+      this.$emit("addToCart", cartItem, Math.floor(qtyInput.value));
+      qtyInput.value = 1; // reset
     },
     onAdjustQuantity(event) {
       if (event.target.classList.contains("quantity__plus")) this.incrementQuantity(event);
