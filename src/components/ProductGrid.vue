@@ -65,7 +65,7 @@
       <div class="modal__content">
         <button class="modal__close">x</button>
         <div class="modal__description">
-          <img class="modal__image" :src="selectedImagePath" />
+          <img class="modal__image" :src="selectedImagePath" :alt="selectedImageAlt" />
           <div class="modal__text-content">
             <div class="modal__title__price">
               <p class="modal__title">
@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       selectedImagePath: "",
+      selectedImageAlt: "Alt text will appear here when you select a product",
       selectedTitle: "",
       selectedPrice: "",
       selectedDescription: "",
@@ -133,6 +134,7 @@ export default {
     onDetailsSelect(event) {
       event.preventDefault();
       this.selectedImagePath = event.target.dataset.image;
+      this.selectedImageAlt = `Image of ${event.target.dataset.title}`;
       this.selectedTitle = event.target.dataset.title;
       this.selectedPrice = event.target.dataset.price;
       this.selectedDescription = event.target.dataset.description;
