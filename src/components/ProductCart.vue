@@ -10,7 +10,7 @@
           />
         </svg>
         <span class="cart__counter">{{ nonUniqueCartItems }}</span>
-        <p class="cart__total">${{ total | formatPrice }}</p>
+        <p class="cart__total">{{ total | formatUSPrice }}</p>
       </button>
       <transition name="fade">
         <ul class="cart__dropdown" v-if="showDropdown && itemsInCart.length > 0">
@@ -40,9 +40,9 @@
             </div>
             <div class="columns small-3 large-offset-1 flex-center">
               <p class="cart__price" v-if="cartItem.quantity">
-                ${{ (cartItem.price * cartItem.quantity) | formatPrice }}
+                {{ (cartItem.price * cartItem.quantity) | formatUSPrice }}
               </p>
-              <p class="cart__price" v-else>${{ cartItem.price | formatPrice }}</p>
+              <p class="cart__price" v-else>{{ cartItem.price | formatUSPrice }}</p>
               <img :src="cartItem.image" :alt="cartItem.title" />
             </div>
           </li>
@@ -107,9 +107,10 @@ export default {
     },
   },
   filters: {
-    formatPrice: (price) => {
+    formatUSPrice: (price) => {
       const priceString = price.toString();
-      return Number(priceString).toFixed(2);
+      const priceRounded = Number(priceString).toFixed(2);
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(priceRounded);
     },
     truncTitle: (title) => {
       const maxChars = 100;

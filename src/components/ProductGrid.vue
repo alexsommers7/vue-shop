@@ -35,7 +35,7 @@
               {{ product.title | truncTitle }}
             </h3>
           </a>
-          <p class="product__price">${{ product.price | formatPrice }}</p>
+          <p class="product__price">{{ product.price | formatUSPrice }}</p>
           <button
             class="btn columns small-8 btn--primary product__btn product__btn--add-to-cart"
             :title="`Add to cart - ${product.title}`"
@@ -71,7 +71,7 @@
               <p class="modal__title">
                 <strong>{{ selectedTitle }}</strong>
               </p>
-              <p class="modal__price">${{ selectedPrice | formatPrice }}</p>
+              <p class="modal__price">{{ selectedPrice | formatUSPrice }}</p>
             </div>
             <p class="modal__text">{{ selectedDescription }}</p>
           </div>
@@ -174,9 +174,10 @@ export default {
     },
   },
   filters: {
-    formatPrice: (price) => {
+    formatUSPrice: (price) => {
       const priceString = price.toString();
-      return Number(priceString).toFixed(2);
+      const priceRounded = Number(priceString).toFixed(2);
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(priceRounded);
     },
     truncTitle: (title) => {
       const maxChars = 50;
