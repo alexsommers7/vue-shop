@@ -51,7 +51,12 @@
           <li>There are no items in your cart yet. When you add items, you'll see them here.</li>
         </ul>
       </transition>
-      <div class="cart__backdrop" v-if="showDropdown" @click="showDropdown = false"></div>
+      <div
+        class="cart__backdrop"
+        v-if="showDropdown"
+        @click="showDropdown = false"
+        :style="{ top: renderedNavHeight + 'px' }"
+      ></div>
     </div>
   </div>
 </template>
@@ -63,6 +68,7 @@ export default {
     cartItems: Array,
     nonUniqueCartItems: Number,
     total: Number,
+    renderedNavHeight: Number,
   },
   data() {
     return {
@@ -89,7 +95,6 @@ export default {
       this.$emit("onRemoveFromCart", event.target.dataset.id);
     },
     onAdjustQuantity(event) {
-      console.log("change detected");
       if (event.target.classList.contains("quantity__plus")) {
         this.incrementQuantity(event);
         this.$emit("onCartQuantityChange", event.target.dataset.id, event.target.previousElementSibling.value);
@@ -106,7 +111,6 @@ export default {
     },
     decrementQuantity(event) {
       event.target.nextElementSibling.value--;
-      console.log(event.target.nextElementSibling);
       if (event.target.nextElementSibling.value <= 1) event.target.disabled = true;
     },
   },

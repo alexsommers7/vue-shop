@@ -23,6 +23,7 @@
         :cartItems="cartItems"
         :total="total"
         :nonUniqueCartItems="nonUniqueCartItems"
+        :renderedNavHeight="renderedNavHeight"
         @onRemoveFromCart="onRemoveFromCart"
         @onCartQuantityChange="onCartQuantityChange"
       ></ProductCart>
@@ -147,6 +148,13 @@ export default {
       mobileNavBackdrop.addEventListener("click", function() {
         navWrapper.classList.remove("in");
       });
+      let that = this;
+      setTimeout(function() {
+        that.checkNavHeight();
+      }, 1000);
+    },
+    checkNavHeight() {
+      this.renderedNavHeight = this.$el.querySelector(".nav").getBoundingClientRect().height;
     },
     smoothScrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -174,12 +182,8 @@ export default {
       });
   },
   mounted() {
-    let that = this;
-    function checkNavHeight() {
-      that.renderedNavHeight = that.$el.querySelector(".nav").getBoundingClientRect().height;
-    }
-    checkNavHeight();
-    window.addEventListener("resize", checkNavHeight);
+    this.checkNavHeight();
+    window.addEventListener("resize", this.checkNavHeight);
   },
   components: {
     ProductGrid,
