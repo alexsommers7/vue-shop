@@ -43,3 +43,23 @@ img {
   height: auto;
   transition: all 1s;
 }
+
+.ie-message {
+  display: none !important;
+
+  @include ieOnly {
+    display: block !important;
+    font-size: 2rem;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: 700;
+
+    & span {
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+  }
+}

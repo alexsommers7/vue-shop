@@ -39,6 +39,11 @@
       ref="productGrid"
     ></ProductGrid>
     <Toast :showToast="showToast" :removingFromCart="removingFromCart"></Toast>
+    <div class="ie-message">
+      Internet Explore had a good run, but it's time to move on.<br /><span
+        >This website doesn't work here - try Edge instead!</span
+      >
+    </div>
   </div>
 </template>
 

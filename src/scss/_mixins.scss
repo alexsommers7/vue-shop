@@ -1,4 +1,3 @@
-// MEDIA QUERY MIXIN
 @mixin respond($breakpoint) {
   @if $breakpoint == tab-port {
     @media only screen and (min-width: 37.5em) {
@@ -34,6 +33,12 @@
     @media only screen and (min-width: 125em) {
       @content;
     } // 2000px
+  }
+}
+
+@mixin ieOnly {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
   }
 }
 

@@ -14,6 +14,11 @@
 // non-loading state
 .loading__content {
   display: none;
+
+  @include ieOnly {
+    // need !important because JS doesn't work to remove loading class
+    display: none !important;
+  }
 }
 
 // loading state
@@ -40,6 +45,10 @@
       position: relative;
       width: 80px;
       height: 80px;
+
+      @include ieOnly {
+        display: none;
+      }
 
       & div {
         transform-origin: 40px 40px;
