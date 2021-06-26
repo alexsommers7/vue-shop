@@ -44,7 +44,15 @@
     transition: all 0.4s;
 
     @include respond(desk-small) {
+      width: 75%;
+    }
+
+    @include respond(desk-medium) {
       width: 60%;
+    }
+
+    @include respond(desk-xlarge) {
+      width: 40%;
     }
 
     @include motionless {
@@ -92,7 +100,6 @@
     font-weight: bold;
 
     @include respond(desk-small) {
-      font-weight: 300;
       padding: 3px 0;
     }
   }

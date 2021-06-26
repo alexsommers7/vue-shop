@@ -36,6 +36,28 @@
       border-bottom: none;
     }
 
+    & .nav__button .nav__icon {
+      background-color: transparent; // Hide the middle bar, while maintaing its size since the psuedo elements depend on it
+
+      &::before {
+        // Rotate the top bar to form one half of the X
+        transform: rotate(135deg);
+        top: 0;
+      }
+
+      &::after {
+        // Rotate the bottom bar to form the other half of the X
+        transform: rotate(-135deg);
+        top: 0;
+      }
+    }
+
+    & .nav__filter,
+    & .nav__sort,
+    & .nav__cart {
+      display: block;
+    }
+
     & ~ .nav__backdrop {
       position: fixed;
       top: 0;
@@ -64,7 +86,7 @@
   &__cart {
     display: none;
     opacity: 0;
-    animation: fade-in 1s 0.1s forwards ease;
+    animation: fade-in 1s 0.2s forwards ease;
 
     @include respond(desk-small) {
       display: block;
@@ -102,22 +124,6 @@
 
     @include respond(desk-small) {
       display: none;
-    }
-
-    &.open .nav__icon {
-      background-color: transparent; // Hide the middle bar, while maintaing its size since the psuedo elements depend on it
-
-      &::before {
-        // Rotate the top bar to form one half of the X
-        transform: rotate(135deg);
-        top: 0;
-      }
-
-      &::after {
-        // Rotate the bottom bar to form the other half of the X
-        transform: rotate(-135deg);
-        top: 0;
-      }
     }
   }
 

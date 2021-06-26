@@ -52,33 +52,6 @@
         </ul>
       </transition>
       <div class="cart__backdrop" v-if="showDropdown" @click="showDropdown = false"></div>
-      <transition name="fade" v-if="toastOn">
-        <div class="cart-toast">
-          <svg
-            version="1.1"
-            id="Capa_1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            x="0px"
-            y="0px"
-            viewBox="0 0 426.667 426.667"
-            style="enable-background:new 0 0 426.667 426.667;"
-            xml:space="preserve"
-          >
-            <g>
-              <g>
-                <path
-                  d="M421.876,56.307c-6.548-6.78-17.352-6.968-24.132-0.42c-0.142,0.137-0.282,0.277-0.42,0.42L119.257,334.375
-                    l-90.334-90.334c-6.78-6.548-17.584-6.36-24.132,0.42c-6.388,6.614-6.388,17.099,0,23.713l102.4,102.4
-                    c6.665,6.663,17.468,6.663,24.132,0L421.456,80.44C428.236,73.891,428.424,63.087,421.876,56.307z"
-                />
-              </g>
-            </g>
-          </svg>
-          <span v-if="!removingFromCart">Item added to cart!</span>
-          <span v-else>Item removed from cart</span>
-        </div>
-      </transition>
     </div>
   </div>
 </template>
@@ -89,13 +62,11 @@ export default {
   props: {
     cartItems: Array,
     nonUniqueCartItems: Number,
-    removingFromCart: Boolean,
     total: Number,
   },
   data() {
     return {
       showDropdown: false,
-      toastOn: false,
     };
   },
   computed: {
@@ -152,30 +123,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -15px);
-  border-top: none;
-}
-.fade-enter-to,
-.fade-leave {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  border-top: 1px solid #ccc;
-}
-
-@media screen and (min-width: 56.25em) {
-  .fade-enter,
-  .fade-leave-to {
-    transform: translateY(-15px);
-    border-top: none;
-  }
-  .fade-enter-to,
-  .fade-leave {
-    transform: translateY(0);
-    border-top: none;
-  }
-}
-</style>
+<style scoped></style>

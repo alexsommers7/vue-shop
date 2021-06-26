@@ -21,14 +21,13 @@
       <SortProducts :products="products" @onProductSort="onProductSort"></SortProducts>
       <ProductCart
         :cartItems="cartItems"
-        :removingFromCart="removingFromCart"
         :total="total"
         :nonUniqueCartItems="nonUniqueCartItems"
         @onRemoveFromCart="onRemoveFromCart"
         @onCartQuantityChange="onCartQuantityChange"
       ></ProductCart>
-      <button class="nav__button" aria-label="navigation" @click="toggleNav">
-        <span class="nav__icon">&nbsp;</span>
+      <button class="nav__button" aria-label="Navigation" @click="toggleNav">
+        <span class="nav__icon"></span>
       </button>
     </nav>
     <div class="nav__backdrop"></div>
@@ -39,6 +38,7 @@
       @addToCart="onAddToCart"
       ref="productGrid"
     ></ProductGrid>
+    <Toast :showToast="showToast" :removingFromCart="removingFromCart"></Toast>
   </div>
 </template>
 
@@ -47,6 +47,7 @@ import ProductGrid from "./components/ProductGrid";
 import FilterProducts from "./components/FilterProducts";
 import SortProducts from "./components/SortProducts";
 import ProductCart from "./components/ProductCart";
+import Toast from "./components/Toast";
 
 export default {
   name: "App",
@@ -54,12 +55,13 @@ export default {
     return {
       products: [],
       categories: [],
-      selectedCategory: "all",
       cartItems: [],
+      selectedCategory: "all",
       nonUniqueCartItems: 0,
-      removingFromCart: false,
       total: 0,
       renderedNavHeight: 0,
+      removingFromCart: false,
+      showToast: false,
     };
   },
   methods: {
@@ -94,14 +96,12 @@ export default {
         this.cartItems.unshift(cartItem);
       } else {
         let index = this.findIndexByID(matchingItems[0].id);
-        if (this.cartItems[index].quantity) {
-          this.cartItems[index].quantity = +this.cartItems[index].quantity + +quantity;
-        } else {
-          this.cartItems[index].quantity = +quantity;
-        }
+        this.cartItems[index].quantity
+          ? (this.cartItems[index].quantity = +this.cartItems[index].quantity + +quantity)
+          : (this.cartItems[index].quantity = +quantity);
         this.reRenderCart();
       }
-      this.toggleNav();
+      this.makeAToast();
     },
     onCartQuantityChange(id, newQuantity) {
       let index = this.findIndexByID(id);
@@ -131,26 +131,27 @@ export default {
     },
     reRenderCart() {
       // force re-render by momentarily altering array
+      // needed for when item is already in cart and just increasing qty
       this.cartItems.push("");
       this.cartItems.pop();
     },
     toggleNav() {
       let navWrapper = this.$el.querySelector("nav.nav");
-      let navContent = this.$el.querySelectorAll(".nav > *:not(.nav__button)");
-      let navButton = this.$el.querySelector(".nav > .nav__button");
       let mobileNavBackdrop = this.$el.querySelector(".nav__backdrop");
-
       navWrapper.classList.toggle("in");
-      navButton.classList.toggle("open");
-      navContent.forEach((item) => item.classList.toggle("show"));
       mobileNavBackdrop.addEventListener("click", function() {
         navWrapper.classList.remove("in");
-        navButton.classList.remove("open");
-        navContent.forEach((item) => item.classList.remove("show"));
       });
     },
     smoothScrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    makeAToast() {
+      let that = this;
+      this.showToast = true;
+      setTimeout(function() {
+        that.showToast = false;
+      }, 2500);
     },
   },
   created() {
@@ -180,10 +181,11 @@ export default {
     FilterProducts,
     SortProducts,
     ProductCart,
+    Toast,
   },
 };
 
-// implementing static fallback JSON for demo purposes as fake store api has been unreliable
+// static fallback JSON for demo purposes as fake store api has been unreliable
 let fallbackJSON = [
   {
     id: 1,
@@ -378,5 +380,31 @@ a:hover,
 a:active,
 a:focus {
   color: $color-white;
+}
+
+// Vue Transition Classes
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -15px);
+  border-top: none;
+}
+.fade-enter-to,
+.fade-leave {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  border-top: 1px solid #ccc;
+}
+@include respond(tab-land) {
+  .fade-enter,
+  .fade-leave-to {
+    transform: translateY(-15px);
+    border-top: none;
+  }
+  .fade-enter-to,
+  .fade-leave {
+    transform: translateY(0);
+    border-top: none;
+  }
 }
 </style>
