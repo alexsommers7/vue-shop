@@ -108,6 +108,7 @@ export default {
         this.reRenderCart();
       }
       this.makeAToast();
+      this.updateLocalStorage();
     },
     onCartQuantityChange(id, newQuantity) {
       let index = this.findIndexByID(id);
@@ -116,6 +117,7 @@ export default {
       this.calculateTotal();
       this.calculateNonUniqueItems();
       this.reRenderCart();
+      this.updateLocalStorage();
     },
     onRemoveFromCart(id) {
       this.removingFromCart = true; // for toast
@@ -123,6 +125,7 @@ export default {
       this.cartItems.splice(index, 1);
       this.calculateTotal();
       this.calculateNonUniqueItems();
+      this.updateLocalStorage();
     },
     findIndexByID(id) {
       return this.cartItems.findIndex((item) => item.id === +id);
@@ -166,6 +169,13 @@ export default {
         that.showToast = false;
       }, 2500);
     },
+    updateLocalStorage() {
+      localStorage.setItem("cart", JSON.stringify(this.cartItems));
+    },
+    checkLocalStorage() {
+      this.cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+      this.calculateNonUniqueItems();
+    },
   },
   created() {
     fetch("https://fakestoreapi.com/products")
@@ -184,6 +194,7 @@ export default {
   mounted() {
     this.checkNavHeight();
     window.addEventListener("resize", this.checkNavHeight);
+    this.checkLocalStorage();
   },
   components: {
     ProductGrid,
