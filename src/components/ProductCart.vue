@@ -77,11 +77,7 @@ export default {
   watch: {
     itemsInCart: {
       handler: function() {
-        let that = this;
-        this.showDropdown = this.toastOn = true;
-        setTimeout(function() {
-          that.toastOn = false;
-        }, 2500);
+        if (window.screen.width >= 1200) this.showDropdown = true;
       },
     },
   },

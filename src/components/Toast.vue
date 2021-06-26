@@ -21,7 +21,7 @@ export default {
   name: "Toast",
   props: {
     showToast: Boolean,
-    removingFromtCart: Boolean,
+    removingFromCart: Boolean,
   },
 };
 </script>
