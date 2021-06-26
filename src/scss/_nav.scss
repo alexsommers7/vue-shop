@@ -97,6 +97,9 @@
       opacity: 1;
       animation: none;
     }
+    @include motionless {
+      opacity: 1;
+    }
   }
 
   &__sort {

@@ -14,10 +14,6 @@
   padding: 2rem;
   transition: all 0.2s ease-out;
 
-  @include motionless {
-    transition: all 0s;
-  }
-
   &.active {
     z-index: 100;
     opacity: 1;
@@ -57,7 +53,6 @@
 
     @include motionless {
       transform: translate(-50%, -50%) scale(1);
-      transition: all 0s;
     }
   }
 
