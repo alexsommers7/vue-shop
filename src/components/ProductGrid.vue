@@ -1,5 +1,6 @@
 <template>
   <section>
+    <h1 class="screen-reader-only">Shop Products</h1>
     <transition-group name="list" tag="div" class="row products text-center" mode="in-out">
       <article
         v-for="product in filteredProductList"
