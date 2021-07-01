@@ -117,12 +117,14 @@ export default {
       this.calculateTotal();
       this.calculateNonUniqueItems();
       this.reRenderCart();
+      this.makeAToast();
       this.updateLocalStorage();
     },
     onRemoveFromCart(id) {
       this.removingFromCart = true; // for toast
       let index = this.findIndexByID(id);
       this.cartItems.splice(index, 1);
+      this.makeAToast();
       this.calculateTotal();
       this.calculateNonUniqueItems();
       this.updateLocalStorage();
