@@ -23,6 +23,10 @@
 .no-scroll {
   overflow-y: hidden;
   width: calc(100% - var(--scrollbarWidth));
+
+  .toTop {
+    right: calc(1.25rem + var(--scrollbarWidth));
+  }
 }
 @keyframes fade-in {
   from {

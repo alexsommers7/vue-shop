@@ -16,7 +16,7 @@
   background-color: rgba($color-primary, 0.85);
   z-index: 90;
   animation: fade-in 0.75s ease;
-  transition: all 0.3s;
+  transition: opacity 0.3s;
 
   &:active {
     outline: none;

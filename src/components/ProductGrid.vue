@@ -1,7 +1,7 @@
 <template>
   <section>
     <h1 class="screen-reader-only">Shop Products</h1>
-    <transition-group name="list" tag="div" class="row products text-center" mode="in-out">
+    <transition-group name="list" tag="div" class="row products text-center" mode="out-in">
       <article
         v-for="product in filteredProductList"
         :key="product.id"
@@ -78,16 +78,18 @@
         </div>
       </div>
     </div>
-    <button v-if="isScrolling" @click="scrollToTop" class="toTop" aria-label="Return to the top of the page">
-      <svg class="icon icon-chevron-thin-up">
-        <use xlink:href="#icon-chevron-thin-up"></use>
-        <symbol id="icon-chevron-thin-up" viewBox="0 0 20 20">
-          <path
-            d="M2.582 13.891c-0.272 0.268-0.709 0.268-0.979 0s-0.271-0.701 0-0.969l7.908-7.83c0.27-0.268 0.707-0.268 0.979 0l7.908 7.83c0.27 0.268 0.27 0.701 0 0.969s-0.709 0.268-0.978 0l-7.42-7.141-7.418 7.141z"
-          ></path>
-        </symbol>
-      </svg>
-    </button>
+    <transition v-if="isScrolling" name="fade">
+      <button aria-label="Return to the top of the page" class="toTop" @click="scrollToTop">
+        <svg class="icon icon-chevron-thin-up">
+          <use xlink:href="#icon-chevron-thin-up"></use>
+          <symbol id="icon-chevron-thin-up" viewBox="0 0 20 20">
+            <path
+              d="M2.582 13.891c-0.272 0.268-0.709 0.268-0.979 0s-0.271-0.701 0-0.969l7.908-7.83c0.27-0.268 0.707-0.268 0.979 0l7.908 7.83c0.27 0.268 0.27 0.701 0 0.969s-0.709 0.268-0.978 0l-7.42-7.141-7.418 7.141z"
+            ></path>
+          </symbol>
+        </svg>
+      </button>
+    </transition>
   </section>
 </template>
 

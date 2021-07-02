@@ -12,7 +12,7 @@
         <span class="cart__counter">{{ nonUniqueCartItems }}</span>
         <p class="cart__total">{{ total | formatUSPrice }}</p>
       </button>
-      <transition name="fade">
+      <transition name="fade-up">
         <ul class="cart__dropdown" v-if="showDropdown && itemsInCart.length > 0">
           <li v-for="cartItem in itemsInCart" :key="cartItem.id" class="row cart__item" data-quantity="1">
             <div class="columns small-8">
