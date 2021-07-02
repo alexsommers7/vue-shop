@@ -21,8 +21,9 @@
   word-wrap: normal !important;
 }
 .no-scroll {
-  height: 100%;
-  overflow-y: hidden;
+  position: fixed;
+  overflow-y: scroll;
+  width: 100%;
 }
 @keyframes fade-in {
   from {
