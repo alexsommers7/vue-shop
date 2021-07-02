@@ -71,3 +71,13 @@ img {
     }
   }
 }
+
+// Zurb Foundation overrides
+.row {
+  max-width: 1920px;
+}
+a:hover,
+a:active,
+a:focus {
+  color: $color-white;
+}

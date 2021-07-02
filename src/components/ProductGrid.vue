@@ -19,7 +19,7 @@
             :data-title="product.title"
             :data-price="product.price"
             :data-description="product.description"
-            @click="onDetailsSelect"
+            @click="openModal"
         /></a>
         <div class="product__data">
           <p class="product__category">{{ product.category }}</p>
@@ -31,7 +31,7 @@
               :data-title="product.title"
               :data-price="product.price"
               :data-description="product.description"
-              @click="onDetailsSelect"
+              @click="openModal"
             >
               {{ product.title | truncTitle }}
             </h3>
@@ -62,21 +62,23 @@
       </article>
     </transition-group>
     <div class="modal" @click="closeModal">
-      <div class="modal__content">
-        <button class="modal__close">x</button>
-        <div class="modal__description">
-          <img class="modal__image" :src="selectedImagePath" :alt="selectedImageAlt" />
-          <div class="modal__text-content">
-            <div class="modal__title__price">
-              <p class="modal__title">
-                <strong>{{ selectedTitle }}</strong>
-              </p>
-              <p class="modal__price">{{ selectedPrice | formatUSPrice }}</p>
+      <transition name="fade-scale" mode="out-in">
+        <div class="modal__content">
+          <button class="modal__close">x</button>
+          <div class="modal__description">
+            <img class="modal__image" :src="selectedImagePath" :alt="selectedImageAlt" />
+            <div class="modal__text-content">
+              <div class="modal__title__price">
+                <p class="modal__title">
+                  <strong>{{ selectedTitle }}</strong>
+                </p>
+                <p class="modal__price">{{ selectedPrice | formatUSPrice }}</p>
+              </div>
+              <p class="modal__text">{{ selectedDescription }}</p>
             </div>
-            <p class="modal__text">{{ selectedDescription }}</p>
           </div>
         </div>
-      </div>
+      </transition>
     </div>
     <transition v-if="isScrolling" name="fade">
       <button aria-label="Return to the top of the page" class="toTop" @click="scrollToTop">
@@ -139,7 +141,7 @@ export default {
     renderedNavHeight: Number,
   },
   methods: {
-    onDetailsSelect(event) {
+    openModal(event) {
       event.preventDefault();
       this.selectedImagePath = event.target.dataset.image;
       this.selectedImageAlt = `Image of ${event.target.dataset.title}`;

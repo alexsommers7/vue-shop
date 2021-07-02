@@ -21,6 +21,7 @@
 
     & .modal__content {
       transform: translate(-50%, -50%) scale(1);
+      transition: all 0.2s ease-out;
     }
   }
 
@@ -35,8 +36,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.1);
-    transition: all 0.4s;
+    transform: translate(-50%, -50%) scale(0);
 
     &::-webkit-scrollbar {
       width: 0px;

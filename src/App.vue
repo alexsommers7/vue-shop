@@ -393,48 +393,4 @@ let fallbackJSON = [
 
 <style lang="scss">
 @import "./scss/main";
-
-// Zurb Foundation overrides
-.row {
-  max-width: 1920px;
-}
-a:hover,
-a:active,
-a:focus {
-  color: $color-white;
-}
-
-// Vue Transition Classes
-.fade-up-enter,
-.fade-up-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -15px);
-  border-top: none;
-}
-.fade-up-enter-to,
-.fade-up-leave {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  border-top: 1px solid #ccc;
-}
-@include respond(tab-land) {
-  .fade-up-enter,
-  .fade-up-leave-to {
-    transform: translateY(-15px);
-    border-top: none;
-  }
-  .fade-up-enter-to,
-  .fade-up-leave {
-    transform: translateY(0);
-    border-top: none;
-  }
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-.fade-enter-to,
-.fade-leave {
-  opacity: 1;
-}
 </style>
