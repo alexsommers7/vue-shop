@@ -102,6 +102,7 @@ export default {
       selectedPrice: "",
       selectedDescription: "",
       isScrolling: false,
+      modalOpen: false,
     };
   },
   computed: {
@@ -124,6 +125,11 @@ export default {
         modal.style.height = `calc(100% - ${this.navHeight})`;
       },
     },
+    modalOpen: {
+      handler: function() {
+        this.modalOpen ? document.body.classList.add("no-scroll") : document.body.classList.remove("no-scroll");
+      },
+    },
   },
   props: {
     products: Array,
@@ -138,6 +144,7 @@ export default {
       this.selectedTitle = event.target.dataset.title;
       this.selectedPrice = event.target.dataset.price;
       this.selectedDescription = event.target.dataset.description;
+      this.modalOpen = true;
       this.$el.querySelector(".modal").classList.add("active");
     },
     onAddToCart(event) {
@@ -165,6 +172,7 @@ export default {
     closeModal(event) {
       if (event.target.classList.contains("modal") || event.target.classList.contains("modal__close")) {
         this.$el.querySelector(".modal").classList.remove("active");
+        this.modalOpen = false;
       }
     },
     detectScroll() {
