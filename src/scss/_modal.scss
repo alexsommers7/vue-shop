@@ -9,7 +9,6 @@
   left: 0;
   background-color: rgba($color-text, 0.7);
   transform-origin: center;
-  overflow-y: scroll;
   z-index: 15;
   padding: 2rem;
   transition: all 0.2s ease-out;
@@ -38,6 +37,11 @@
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     transition: all 0.4s;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+    }
 
     @include respond(desk-small) {
       width: 75%;

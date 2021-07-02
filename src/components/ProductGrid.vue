@@ -197,6 +197,8 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.detectScroll);
+    let scrollbarWidth = window.innerWidth - document.body.clientWidth + "px";
+    document.documentElement.style.setProperty("--scrollbarWidth", scrollbarWidth);
   },
 };
 </script>
