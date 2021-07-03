@@ -51,12 +51,14 @@
           <li>There are no items in your cart yet. When you add items, you'll see them here.</li>
         </ul>
       </transition>
-      <div
-        class="cart__backdrop"
-        v-if="showDropdown"
-        @click="showDropdown = false"
-        :style="{ top: renderedNavHeight + 'px' }"
-      ></div>
+      <transition name="fade-backdrop">
+        <div
+          class="cart__backdrop"
+          v-if="showDropdown"
+          @click="showDropdown = false"
+          :style="{ top: renderedNavHeight + 'px' }"
+        ></div>
+      </transition>
     </div>
   </div>
 </template>

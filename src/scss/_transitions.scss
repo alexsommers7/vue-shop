@@ -47,3 +47,15 @@
 .fade-scale-leave-active {
   transition: all 0.1s;
 }
+.fade-backdrop-enter,
+.fade-backdrop-leave-to {
+  opacity: 0;
+}
+.fade-backdrop-enter-to,
+.fade-backdrop-leave {
+  opacity: 0.4;
+
+  @include respond(desk-small) {
+    opacity: 0;
+  }
+}
