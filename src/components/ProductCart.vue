@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     onCartClick() {
-      this.showDropdown === true ? (this.showDropdown = false) : (this.showDropdown = true);
+      this.showDropdown = this.showDropdown === true ? false : true;
     },
     onRemoveFromCart(event) {
       this.$emit("onRemoveFromCart", event.target.dataset.id);
