@@ -24,7 +24,7 @@
         <div class="product__data">
           <p class="product__category">{{ product.category }}</p>
           <a href="#">
-            <h3
+            <h2
               class="product__name"
               :title="`See details - ${product.title}`"
               :data-image="product.image"
@@ -34,7 +34,7 @@
               @click="openModal"
             >
               {{ product.title | truncTitle }}
-            </h3>
+            </h2>
           </a>
           <p class="product__price">{{ product.price | formatUSPrice }}</p>
           <div class="quantity">
