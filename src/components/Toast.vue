@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "Toast",
+  name: 'Toast',
   props: {
     showToast: Boolean,
     removingFromCart: Boolean,

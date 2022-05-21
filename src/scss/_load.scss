@@ -55,7 +55,7 @@
         animation: loading__spinner 1.2s linear infinite;
 
         &:after {
-          content: " ";
+          content: ' ';
           display: block;
           position: absolute;
           top: 3px;
