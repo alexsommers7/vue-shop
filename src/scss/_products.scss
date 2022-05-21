@@ -2,6 +2,9 @@
   margin: 0 auto;
   padding: 1rem;
   padding-top: $nav-mobile-height;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 2rem;
 
   @include respond(desk-small) {
     padding: 2.5rem;
@@ -19,30 +22,12 @@
   text-align: center;
   position: relative;
   font-family: $font-family-main;
-  margin: 1.1rem 0;
   max-width: 100%;
   width: 100%;
   flex: 0 0 100%;
   transition: all 1s;
-
-  @include respond(tab-port) {
-    max-width: 48%;
-    width: 48%;
-    flex: 0 0 48%;
-    margin: 1.1rem 1%;
-  }
-
-  @include respond(tab-land) {
-    max-width: 31%;
-    width: 31%;
-    flex: 0 0 31%;
-  }
-
-  @include respond(desk-medium) {
-    max-width: 23%;
-    width: 23%;
-    flex: 0 0 23%;
-  }
+  display: flex;
+  flex-direction: column;
 
   & a {
     text-decoration: none;
@@ -54,6 +39,7 @@
     width: 100%;
     background-color: #fff;
     padding: 1rem;
+    cursor: pointer;
 
     @include respond(tab-land) {
       height: 350px;
@@ -61,7 +47,10 @@
   }
 
   &__data {
-    padding: 1rem 1rem 5.25rem; // extra on bottom for abs positioned button
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   &__name,
@@ -77,7 +66,7 @@
     position: relative;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       bottom: -8px;
@@ -102,17 +91,15 @@
     font-weight: 400;
   }
 
-  &__btn {
-    position: absolute;
-    bottom: 1rem;
-    margin: 1rem auto;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
+  &__btn-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 
-    @include respond(desk-medium) {
-      width: 50%;
-    }
+  &__btn--add-to-cart {
+    margin-top: 1.5rem;
   }
 }
 
@@ -152,7 +139,7 @@
       margin: 0;
     }
 
-    &[type="number"] {
+    &[type='number'] {
       // firefox
       -moz-appearance: textfield;
     }

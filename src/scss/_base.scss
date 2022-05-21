@@ -46,6 +46,12 @@ ul {
   font-family: $font-family-main;
 }
 
+button {
+  appearance: none;
+  background: none;
+  border: none;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -72,7 +78,6 @@ img {
   }
 }
 
-// Zurb Foundation overrides
 .row {
   max-width: 1920px;
 }

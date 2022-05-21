@@ -1,5 +1,5 @@
 <template>
-  <div class="columns small-6 large-1 nav__sort">
+  <div class="nav__sort">
     <p>Sort by:</p>
     <form name="sort__form" action="">
       <select class="sort__select" name="sort__select" @change="onProductSort" aria-label="Sort Products">
@@ -13,13 +13,13 @@
 
 <script>
 export default {
-  name: "SortProducts",
+  name: 'SortProducts',
   props: {
     products: Array,
   },
   methods: {
     onProductSort(event) {
-      this.$emit("onProductSort", event.target.value);
+      this.$emit('onProductSort', event.target.value);
     },
   },
 };
