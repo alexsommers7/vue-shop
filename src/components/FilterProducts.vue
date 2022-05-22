@@ -19,6 +19,7 @@ export default {
   props: {
     categories: Array,
   },
+  emits: ['filterChange'],
   methods: {
     filter(event) {
       this.$el.querySelector('.btn--primary').classList.remove('btn--primary');

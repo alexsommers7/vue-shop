@@ -17,6 +17,7 @@ export default {
   props: {
     products: Array,
   },
+  emits: ['onProductSort'],
   methods: {
     onProductSort(event) {
       this.$emit('onProductSort', event.target.value);

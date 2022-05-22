@@ -74,6 +74,7 @@ export default {
     total: Number,
     renderedNavHeight: Number,
   },
+  emits: ['onRemoveFromCart', 'onCartQuantityChange'],
   data() {
     return {
       showDropdown: false,
