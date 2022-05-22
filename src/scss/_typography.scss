@@ -36,6 +36,11 @@
     }
   }
 
+  &--text {
+    cursor: pointer;
+    padding: 0;
+  }
+
   &:hover {
     background-color: rgba($color-primary, 0.85);
   }

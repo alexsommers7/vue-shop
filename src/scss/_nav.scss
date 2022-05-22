@@ -125,7 +125,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     position: absolute;
     right: 0.5rem;
     top: 6px;
@@ -173,5 +172,11 @@
     &::after {
       top: 0.675rem;
     }
+  }
+}
+
+.sort {
+  &__select {
+    cursor: pointer;
   }
 }
