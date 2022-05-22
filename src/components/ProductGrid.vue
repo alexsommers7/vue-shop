@@ -4,82 +4,62 @@
     <transition-group name="list" tag="div" class="row products text-center" mode="out-in">
       <article
         v-for="product in filteredProductList"
-        :key="product.id"
-        class="product columns list-item"
-        :data-category="product.category"
-        :data-price="product.price"
+        :key="product.sku"
+        class="product list-item"
+        :data-category="product.category.name"
+        :data-price="product.sale_price"
       >
-        <a href="#"
-          ><img
+        <button :aria-label="`See Details: ${product.name}`" :title="`See Details: ${product.name}`">
+          <img
             class="product__img"
-            :src="product.image"
-            :alt="`Image of ${product.title}`"
-            :title="`See details - ${product.title}`"
-            :data-image="product.image"
-            :data-title="product.title"
-            :data-price="product.price"
-            :data-description="product.description"
-            @click="openModal"
-        /></a>
+            :src="product.image_main"
+            :alt="`${product.name}`"
+            :data-sku="product.sku"
+            @click="updateModal"
+          />
+        </button>
         <div class="product__data">
-          <p class="product__category">{{ product.category }}</p>
-          <a href="#">
+          <p class="product__category">{{ product.category.name }}</p>
+          <button class="btn--text" aria-label="View item details">
             <h2
               class="product__name"
-              :title="`See details - ${product.title}`"
-              :data-image="product.image"
-              :data-title="product.title"
-              :data-price="product.price"
-              :data-description="product.description"
-              @click="openModal"
+              :title="`See Details: ${product.name}`"
+              :data-sku="product.sku"
+              @click="updateModal"
             >
-              {{ product.title | truncTitle }}
+              {{ product.name | truncTitle }}
             </h2>
-          </a>
-          <p class="product__price">{{ product.price | formatUSPrice }}</p>
+          </button>
+          <p class="product__price">{{ product.sale_price | formatUSPrice }}</p>
           <div class="quantity">
-            <label :for="product.id" class="screen-reader-only">Quantity</label>
-            <button class="quantity__minus" @click="onAdjustQuantity">-</button>
+            <label :for="product.sku" class="screen-reader-only">Quantity</label>
+            <button class="quantity__minus" @click="product.quantity--">-</button>
             <input
               type="number"
-              value="1"
               min="1"
               class="quantity__value"
-              :id="product.id"
-              @change="onAdjustQuantity"
+              :id="product.sku"
+              :disabled="product.quantity < 1"
+              v-model.number="product.quantity"
             />
-            <button class="quantity__plus" @click="onAdjustQuantity">+</button>
+            <button class="quantity__plus" @click="product.quantity++">+</button>
           </div>
-          <button
-            class="btn columns small-8 btn--primary product__btn product__btn--add-to-cart"
-            :title="`Add to cart - ${product.title}`"
-            :data-id="product.id"
-            @click="onAddToCart"
-          >
-            Add To Cart
-          </button>
+          <div class="product__btn-wrapper">
+            <button
+              class="btn btn--primary product__btn product__btn--add-to-cart"
+              :title="`Add to cart - ${product.name}`"
+              :data-sku="product.sku"
+              @click="onAddToCart"
+            >
+              Add To Cart
+            </button>
+          </div>
         </div>
       </article>
     </transition-group>
-    <div class="modal" @click="closeModal">
-      <transition name="fade-scale" mode="out-in">
-        <div class="modal__content">
-          <button class="modal__close">x</button>
-          <div class="modal__description">
-            <img class="modal__image" :src="selectedImagePath" :alt="selectedImageAlt" />
-            <div class="modal__text-content">
-              <div class="modal__title__price">
-                <p class="modal__title">
-                  <strong>{{ selectedTitle }}</strong>
-                </p>
-                <p class="modal__price">{{ selectedPrice | formatUSPrice }}</p>
-              </div>
-              <p class="modal__text">{{ selectedDescription }}</p>
-            </div>
-          </div>
-        </div>
-      </transition>
-    </div>
+    <transition name="fade-scale" mode="out-in">
+      <Modal :modalData="modalData"></Modal>
+    </transition>
     <transition v-if="isScrolling" name="fade">
       <button aria-label="Return to the top of the page" class="toTop" @click="scrollToTop">
         <svg class="icon icon-chevron-thin-up">
@@ -96,26 +76,33 @@
 </template>
 
 <script>
+import Modal from './Modal';
+
 export default {
-  name: "ProductGrid",
+  name: 'ProductGrid',
   data() {
     return {
-      selectedImagePath: "",
-      selectedImageAlt: "Alt text will appear here when you select a product",
-      selectedTitle: "",
-      selectedPrice: "",
-      selectedDescription: "",
+      modalData: {
+        openTriggered: false,
+        selectedImagePath: '',
+        selectedImageAlt: '',
+        selectedTitle: '',
+        selectedPrice: '',
+        selectedDescription: '',
+      },
       isScrolling: false,
-      modalOpen: false,
+      cart: {
+        quantity: 1,
+      },
     };
   },
   computed: {
+    productsLocal() {
+      return [...this.products];
+    },
     filteredProductList() {
-      if (this.selectedCategory === "all") return this.products;
-      const vm = this;
-      return this.products.filter((product) => {
-        return product.category === vm.selectedCategory;
-      });
+      if (this.selectedCategory === 'all') return this.productsLocal;
+      return this.productsLocal.filter((product) => product.category.name === this.selectedCategory);
     },
     navHeight() {
       return `${this.renderedNavHeight}px`;
@@ -124,14 +111,9 @@ export default {
   watch: {
     navHeight: {
       handler: function() {
-        const modal = this.$el.querySelector(".modal");
+        const modal = this.$el.querySelector('.modal');
         modal.style.top = this.navHeight;
         modal.style.height = `calc(100% - ${this.navHeight})`;
-      },
-    },
-    modalOpen: {
-      handler: function() {
-        this.modalOpen ? document.body.classList.add("no-scroll") : document.body.classList.remove("no-scroll");
       },
     },
   },
@@ -141,43 +123,23 @@ export default {
     renderedNavHeight: Number,
   },
   methods: {
-    openModal(event) {
-      event.preventDefault();
-      this.selectedImagePath = event.target.dataset.image;
-      this.selectedImageAlt = `Image of ${event.target.dataset.title}`;
-      this.selectedTitle = event.target.dataset.title;
-      this.selectedPrice = event.target.dataset.price;
-      this.selectedDescription = event.target.dataset.description;
-      this.modalOpen = true;
-      this.$el.querySelector(".modal").classList.add("active");
+    findItemBySKU(sku) {
+      return this.filteredProductList.find((item) => item.sku == sku);
     },
-    onAddToCart(event) {
-      let qtyInput = event.target.parentElement.querySelector(".quantity__value");
-      if (qtyInput.value < 1) return (qtyInput.value = 1);
-      let cartItem = this.products.find((product) => product.id === +event.target.dataset.id);
-      this.$emit("addToCart", cartItem, Math.floor(qtyInput.value));
-      qtyInput.value = 1; // reset
+    updateModal(e) {
+      const item = this.findItemBySKU(e.target.dataset.sku);
+      this.modalData.selectedImagePath = item.image_main;
+      this.modalData.selectedImageAlt = `Image of ${item.name}`;
+      this.modalData.selectedTitle = item.name;
+      this.modalData.selectedPrice = item.sale_price;
+      this.modalData.selectedDescription = item.description;
+      this.modalData.openTriggered = true;
     },
-    onAdjustQuantity(event) {
-      if (event.target.classList.contains("quantity__plus")) this.incrementQuantity(event);
-      else if (event.target.classList.contains("quantity__minus")) this.decrementQuantity(event);
-    },
-    incrementQuantity(event) {
-      event.target.previousElementSibling.value++;
-      event.target.previousElementSibling.previousElementSibling.disabled = false;
-    },
-    decrementQuantity(event) {
-      event.target.nextElementSibling.value--;
-      if (event.target.nextElementSibling.value <= 1) {
-        event.target.nextElementSibling.value = 1;
-        event.target.disabled = true;
-      }
-    },
-    closeModal(event) {
-      if (event.target.classList.contains("modal") || event.target.classList.contains("modal__close")) {
-        this.$el.querySelector(".modal").classList.remove("active");
-        this.modalOpen = false;
-      }
+    onAddToCart(e) {
+      const item = this.findItemBySKU(e.target.dataset.sku);
+      if (item.quantity < 1) return (item.quantity = 1);
+      this.$emit('addToCart', item, Math.floor(item.quantity));
+      item.quantity = 1; // reset
     },
     detectScroll() {
       document.body.scrollTop > 700 || document.documentElement.scrollTop > 700
@@ -185,24 +147,16 @@ export default {
         : (this.isScrolling = false);
     },
     scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-  },
-  filters: {
-    formatUSPrice: (price) => {
-      const priceString = price.toString();
-      const priceRounded = Number(priceString).toFixed(2);
-      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(priceRounded);
-    },
-    truncTitle: (title) => {
-      const maxChars = 50;
-      return title.length > maxChars ? `${title.substring(0, maxChars)}...` : title;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   },
   mounted() {
-    window.addEventListener("scroll", this.detectScroll);
-    let scrollbarWidth = window.innerWidth - document.body.clientWidth + "px";
-    document.documentElement.style.setProperty("--scrollbarWidth", scrollbarWidth);
+    window.addEventListener('scroll', this.detectScroll, { passive: true });
+    let scrollbarWidth = window.innerWidth - document.body.clientWidth + 'px';
+    document.documentElement.style.setProperty('--scrollbarWidth', scrollbarWidth);
+  },
+  components: {
+    Modal,
   },
 };
 </script>
