@@ -10,13 +10,13 @@
           />
         </svg>
         <span class="cart__counter">{{ uniqueCartItems }}</span>
-        <p class="cart__total">{{ total | formatUSPrice }}</p>
+        <p class="cart__total">{{ formatUSPrice(total) }}</p>
       </button>
       <transition name="fade-up">
         <ul class="cart__dropdown" v-if="showDropdown && itemsInCart.length > 0">
           <li v-for="cartItem in itemsInCart" :key="cartItem.sku" class="row cart__item" data-quantity="1">
             <div>
-              <p :title="cartItem.name">{{ cartItem.name | truncTitle }}</p>
+              <p :title="cartItem.name">{{ truncTitle(cartItem.name) }}</p>
               <div class="quantity">
                 <button
                   class="quantity__minus"
@@ -40,9 +40,9 @@
             </div>
             <div class="flex-center">
               <p class="cart__price" v-if="cartItem.quantity">
-                {{ (cartItem.sale_price * cartItem.quantity) | formatUSPrice }}
+                {{ formatUSPrice(cartItem.sale_price * cartItem.quantity) }}
               </p>
-              <p class="cart__price" v-else>{{ cartItem.sale_price | formatUSPrice }}</p>
+              <p class="cart__price" v-else>{{ formatUSPrice(cartItem.sale_price) }}</p>
               <img :src="cartItem.image_main" :alt="cartItem.name" />
             </div>
           </li>
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+import { formatUSPrice, truncTitle } from '../utils/filters';
+
 export default {
   name: 'ProductCart',
   props: {
@@ -87,9 +89,12 @@ export default {
       handler: function() {
         if (window.screen.width >= 1200) this.showDropdown = true;
       },
+      deep: true,
     },
   },
   methods: {
+    formatUSPrice,
+    truncTitle,
     onCartClick() {
       this.showDropdown = this.showDropdown === true ? false : true;
     },

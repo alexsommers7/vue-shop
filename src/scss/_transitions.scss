@@ -1,5 +1,5 @@
 // Vue Transition Classes
-.fade-up-enter,
+.fade-up-enter-from,
 .fade-up-leave-to {
   opacity: 0;
   transform: translate(-50%, -15px);
@@ -11,7 +11,7 @@
   }
 }
 .fade-up-enter-to,
-.fade-up-leave {
+.fade-up-leave-from {
   opacity: 1;
   transform: translate(-50%, 0);
   border-top: 1px solid #ccc;
@@ -21,30 +21,30 @@
     border-top: none;
   }
 }
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
 .fade-enter-to,
-.fade-leave {
+.fade-leave-from {
   opacity: 1;
 }
-.fade-scale-enter,
+.fade-scale-enter-from,
 .fade-scale-leave-to {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0);
 }
 .fade-scale-enter-to,
-.fade-scale-leave {
+.fade-scale-leave-from {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
-.fade-backdrop-enter,
+.fade-backdrop-enter-from,
 .fade-backdrop-leave-to {
   opacity: 0;
 }
 .fade-backdrop-enter-to,
-.fade-backdrop-leave {
+.fade-backdrop-leave-from {
   opacity: 0.4;
 
   @include respond(desk-small) {

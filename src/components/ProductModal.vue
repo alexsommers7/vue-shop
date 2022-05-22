@@ -9,7 +9,7 @@
             <p class="modal__title">
               <strong>{{ modalData.selectedTitle }}</strong>
             </p>
-            <p class="modal__price">{{ modalData.selectedPrice | formatUSPrice }}</p>
+            <p class="modal__price">{{ formatUSPrice(modalData.selectedPrice) }}</p>
           </div>
           <p class="modal__text">{{ modalData.selectedDescription }}</p>
         </div>
@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import { formatUSPrice } from '../utils/filters';
+
 export default {
-  name: 'Modal',
+  name: 'ProductModal',
   data() {
     return {
       modalOpen: false,
@@ -41,6 +43,9 @@ export default {
         this.modalOpen ? document.body.classList.add('no-scroll') : document.body.classList.remove('no-scroll');
       },
     },
+  },
+  methods: {
+    formatUSPrice,
   },
 };
 </script>

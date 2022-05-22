@@ -3,16 +3,9 @@
   padding: 1rem;
   padding-top: $nav-mobile-height;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-gap: 2rem;
-
-  @include respond(desk-small) {
-    padding: 2.5rem;
-  }
-
-  @include respond(desk-medium) {
-    padding: 2rem 5rem 5rem;
-  }
+  justify-content: center;
 }
 .product {
   background-color: #fff;
@@ -22,9 +15,6 @@
   text-align: center;
   position: relative;
   font-family: $font-family-main;
-  max-width: 100%;
-  width: 100%;
-  flex: 0 0 100%;
   transition: all 1s;
   display: flex;
   flex-direction: column;

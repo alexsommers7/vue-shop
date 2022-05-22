@@ -53,7 +53,7 @@ import ProductGrid from './components/ProductGrid';
 import FilterProducts from './components/FilterProducts';
 import SortProducts from './components/SortProducts';
 import ProductCart from './components/ProductCart';
-import Toast from './components/Toast';
+import Toast from './components/CartToast';
 
 export default {
   name: 'App',

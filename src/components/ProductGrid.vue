@@ -27,10 +27,10 @@
               :data-sku="product.sku"
               @click="updateModal"
             >
-              {{ product.name | truncTitle }}
+              {{ truncTitle(product.name) }}
             </h2>
           </button>
-          <p class="product__price">{{ product.sale_price | formatUSPrice }}</p>
+          <p class="product__price">{{ formatUSPrice(product.sale_price) }}</p>
           <div class="quantity">
             <label :for="product.sku" class="screen-reader-only">Quantity</label>
             <button class="quantity__minus" @click="product.quantity--">-</button>
@@ -76,7 +76,8 @@
 </template>
 
 <script>
-import Modal from './Modal';
+import Modal from './ProductModal';
+import { formatUSPrice, truncTitle } from '../utils/filters';
 
 export default {
   name: 'ProductGrid',
@@ -123,6 +124,8 @@ export default {
     renderedNavHeight: Number,
   },
   methods: {
+    formatUSPrice,
+    truncTitle,
     findItemBySKU(sku) {
       return this.filteredProductList.find((item) => item.sku == sku);
     },
@@ -171,7 +174,7 @@ export default {
   transition-delay: 0.75s;
 }
 
-.list-enter,
+.list-enter-from,
 .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
