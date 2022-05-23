@@ -10,7 +10,7 @@
           />
         </svg>
         <span class="cart__counter">{{ uniqueCartItems }}</span>
-        <p class="cart__total">{{ formatUSPrice(total) }}</p>
+        <p class="cart__total">{{ prettyPriceUS(total) }}</p>
       </button>
       <transition name="fade-up">
         <ul class="cart__dropdown" v-if="showDropdown && itemsInCart.length > 0">
@@ -40,9 +40,9 @@
             </div>
             <div class="flex-center">
               <p class="cart__price" v-if="cartItem.quantity">
-                {{ formatUSPrice(cartItem.sale_price * cartItem.quantity) }}
+                {{ prettyPriceUS(cartItem.sale_price * cartItem.quantity) }}
               </p>
-              <p class="cart__price" v-else>{{ formatUSPrice(cartItem.sale_price) }}</p>
+              <p class="cart__price" v-else>{{ prettyPriceUS(cartItem.sale_price) }}</p>
               <img :src="cartItem.image_main" :alt="cartItem.name" />
             </div>
           </li>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { formatUSPrice, truncTitle } from '../utils/filters';
+import { prettyPriceUS, truncTitle } from '../utils/utilities';
 
 export default {
   name: 'ProductCart',
@@ -94,7 +94,7 @@ export default {
     },
   },
   methods: {
-    formatUSPrice,
+    prettyPriceUS,
     truncTitle,
     onCartClick() {
       this.showDropdown = this.showDropdown === true ? false : true;

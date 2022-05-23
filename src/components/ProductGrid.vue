@@ -30,17 +30,18 @@
               {{ truncTitle(product.name) }}
             </h2>
           </button>
-          <p class="product__price">{{ formatUSPrice(product.sale_price) }}</p>
+          <p class="product__price">{{ prettyPriceUS(product.sale_price) }}</p>
           <div class="quantity">
             <label :for="product.sku" class="screen-reader-only">Quantity</label>
-            <button class="quantity__minus" @click="product.quantity--">-</button>
+            <button class="quantity__minus" @click="product.quantity > 1 && product.quantity--">-</button>
             <input
               type="number"
               min="1"
               class="quantity__value"
               :id="product.sku"
-              :disabled="product.quantity < 1"
+              :disabled="typeof product.quantity === 'Number' && product.quantity < 1"
               v-model.number="product.quantity"
+              @change="product.quantity = typeof product.quantity === 'String' ? 1 : product.quantity"
             />
             <button class="quantity__plus" @click="product.quantity++">+</button>
           </div>
@@ -77,7 +78,7 @@
 
 <script>
 import Modal from './ProductModal';
-import { formatUSPrice, truncTitle } from '../utils/filters';
+import { prettyPriceUS, truncTitle } from '../utils/utilities';
 
 export default {
   name: 'ProductGrid',
@@ -123,8 +124,9 @@ export default {
     selectedCategory: String,
     renderedNavHeight: Number,
   },
+  emits: ['addToCart'],
   methods: {
-    formatUSPrice,
+    prettyPriceUS,
     truncTitle,
     findItemBySKU(sku) {
       return this.filteredProductList.find((item) => item.sku == sku);

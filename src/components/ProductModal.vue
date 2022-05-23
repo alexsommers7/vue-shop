@@ -9,7 +9,7 @@
             <p class="modal__title">
               <strong>{{ modalData.selectedTitle }}</strong>
             </p>
-            <p class="modal__price">{{ formatUSPrice(modalData.selectedPrice) }}</p>
+            <p class="modal__price">{{ prettyPriceUS(modalData.selectedPrice) }}</p>
           </div>
           <p class="modal__text">{{ modalData.selectedDescription }}</p>
         </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { formatUSPrice } from '../utils/filters';
+import { prettyPriceUS } from '../utils/utilities';
 
 export default {
   name: 'ProductModal',
@@ -45,7 +45,7 @@ export default {
     },
   },
   methods: {
-    formatUSPrice,
+    prettyPriceUS,
   },
 };
 </script>
