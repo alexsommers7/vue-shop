@@ -64,6 +64,7 @@
   &__text {
     flex: 0 0 95%;
     max-width: 95%;
+    margin: auto;
   }
 
   &__title__price {
@@ -129,7 +130,7 @@
 
   &__image,
   &__text {
-    margin: 0.25rem 0;
+    margin: 0.25rem auto;
   }
 
   &__image {
