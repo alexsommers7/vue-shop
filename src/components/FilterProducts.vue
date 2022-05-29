@@ -2,30 +2,42 @@
   <div class="nav__filter">
     <ul class="row filter__categories">
       <li class="filter__category">
-        <button class="btn btn--filter btn--primary" data-filter="all" @click="filter">
+        <button
+          class="btn btn--filter"
+          :class="{ 'btn--primary': catalogStore.selectedCategory === 'all' }"
+          @click="filter('all')"
+        >
           Show All
         </button>
       </li>
-      <li class="filter__category" v-for="category in categories" :key="category.name">
-        <button class="btn btn--filter" :data-filter="category.name" @click="filter">{{ category.name }}</button>
+      <li class="filter__category" v-for="category in catalogStore.categories" :key="category.name">
+        <button
+          class="btn btn--filter"
+          :class="{ 'btn--primary': catalogStore.selectedCategory === category.name }"
+          @click="filter(category.name)"
+        >
+          {{ category.name }}
+        </button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useCartStore } from '../stores/cart.js';
+import { useCatalogStore } from '../stores/catalog.js';
+
 export default {
   name: 'FilterProducts',
-  props: {
-    categories: Array,
+  emits: ['visualReset'],
+  computed: {
+    ...mapStores(useCartStore, useCatalogStore),
   },
-  emits: ['filterChange'],
   methods: {
-    filter(event) {
-      this.$el.querySelector('.btn--primary').classList.remove('btn--primary');
-      event.target.classList.add('btn--primary');
-      const filter = event.target.dataset.filter;
-      this.$emit('filterChange', filter);
+    filter(filterName) {
+      this.catalogStore.selectedCategory = filterName;
+      this.$emit('visualReset');
     },
   },
 };
