@@ -15,18 +15,13 @@
             :src="product.image_main"
             :alt="`${product.name}`"
             :data-sku="product.sku"
-            @click="updateModal"
+            @click="updateModal(product)"
           />
         </button>
         <div class="product__data">
           <p class="product__category">{{ product.category.name }}</p>
           <button class="btn--text" aria-label="View item details">
-            <h2
-              class="product__name"
-              :title="`See Details: ${product.name}`"
-              :data-sku="product.sku"
-              @click="updateModal"
-            >
+            <h2 class="product__name" :title="`See Details: ${product.name}`" @click="updateModal(product)">
               {{ truncTitle(product.name) }}
             </h2>
           </button>
@@ -49,8 +44,7 @@
             <button
               class="btn btn--primary product__btn product__btn--add-to-cart"
               :title="`Add to cart - ${product.name}`"
-              :data-sku="product.sku"
-              @click="onAddToCart"
+              @click="onAddToCart(product)"
             >
               Add To Cart
             </button>
@@ -61,8 +55,14 @@
     <transition name="fade-scale" mode="out-in">
       <Modal :modalData="modalData"></Modal>
     </transition>
+
     <transition v-if="isScrolling" name="fade">
-      <button aria-label="Return to the top of the page" class="toTop" @click="scrollToTop">
+      <button
+        aria-label="Return to the top of the page"
+        title="Return to the top of the page"
+        class="toTop"
+        @click="scrollToTop"
+      >
         <svg class="icon icon-chevron-thin-up">
           <use xlink:href="#icon-chevron-thin-up"></use>
           <symbol id="icon-chevron-thin-up" viewBox="0 0 20 20">
@@ -79,6 +79,9 @@
 <script>
 import Modal from './ProductModal';
 import { prettyPriceUS, truncTitle } from '../utils/utilities';
+import { mapStores } from 'pinia';
+import { useCartStore } from '../stores/cart.js';
+import { useCatalogStore } from '../stores/catalog.js';
 
 export default {
   name: 'ProductGrid',
@@ -93,18 +96,17 @@ export default {
         selectedDescription: '',
       },
       isScrolling: false,
-      cart: {
-        quantity: 1,
-      },
     };
   },
   computed: {
+    ...mapStores(useCartStore, useCatalogStore),
     productsLocal() {
-      return [...this.products];
+      return [...this.catalogStore.items];
     },
     filteredProductList() {
-      if (this.selectedCategory === 'all') return this.productsLocal;
-      return this.productsLocal.filter((product) => product.category.name === this.selectedCategory);
+      return this.catalogStore.selectedCategory === 'all'
+        ? this.productsLocal
+        : this.productsLocal.filter((product) => product.category.name === this.catalogStore.selectedCategory);
     },
     navHeight() {
       return `${this.renderedNavHeight}px`;
@@ -112,7 +114,7 @@ export default {
   },
   watch: {
     navHeight: {
-      handler: function() {
+      handler: function () {
         const modal = this.$el.querySelector('.modal');
         modal.style.top = this.navHeight;
         modal.style.height = `calc(100% - ${this.navHeight})`;
@@ -120,19 +122,16 @@ export default {
     },
   },
   props: {
-    products: Array,
-    selectedCategory: String,
     renderedNavHeight: Number,
   },
-  emits: ['addToCart'],
   methods: {
     prettyPriceUS,
     truncTitle,
     findItemBySKU(sku) {
       return this.filteredProductList.find((item) => item.sku == sku);
     },
-    updateModal(e) {
-      const item = this.findItemBySKU(e.target.dataset.sku);
+    updateModal(item) {
+      this.modalData = {}; // reset in case same item is clicked on
       this.modalData.selectedImagePath = item.image_main;
       this.modalData.selectedImageAlt = `Image of ${item.name}`;
       this.modalData.selectedTitle = item.name;
@@ -140,10 +139,8 @@ export default {
       this.modalData.selectedDescription = item.description;
       this.modalData.openTriggered = true;
     },
-    onAddToCart(e) {
-      const item = this.findItemBySKU(e.target.dataset.sku);
-      if (item.quantity < 1) return (item.quantity = 1);
-      this.$emit('addToCart', item, Math.floor(item.quantity));
+    onAddToCart(item) {
+      this.cartStore.addToCart(item.sku, item.quantity);
       item.quantity = 1; // reset
     },
     detectScroll() {
