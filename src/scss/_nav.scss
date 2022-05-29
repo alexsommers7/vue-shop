@@ -4,13 +4,14 @@
   left: 0;
   background-color: $color-background;
   box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.05);
-  padding: 0.75rem 1rem 0;
+  padding: 0.75rem 1rem;
   width: 100%;
   max-width: 100%;
   min-height: $nav-mobile-height;
   max-height: $nav-mobile-height;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   z-index: 110;
   border-bottom: 1px solid #ccc;
   transition: max-height 1.2s cubic-bezier(0.61, 1, 0.88, 1);
@@ -104,13 +105,27 @@
     }
   }
 
+  &__filter {
+    align-self: center;
+  }
+
   &__sort {
     width: 13rem;
     max-width: 13rem;
     flex: 0 0 13rem;
+    align-self: stretch;
 
     @include respond(desk-small) {
       margin-left: auto;
+      align-self: center;
+    }
+  }
+
+  &__cart {
+    margin-left: auto;
+
+    @include respond(desk-small) {
+      margin-left: 0;
     }
   }
 

@@ -1,9 +1,9 @@
 .toTop {
   position: fixed;
-  bottom: 2rem;
-  right: 1.25rem;
-  width: 3rem;
-  height: 3rem;
+  bottom: 16px;
+  left: 16px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100px;
   align-items: center;
   justify-content: center;
@@ -15,7 +15,7 @@
   padding: 0;
   background-color: rgba($color-primary, 0.85);
   z-index: 90;
-  animation: fade-in 0.75s ease;
+  animation: fade-in-from-bottom 0.5s ease;
   transition: opacity 0.4s;
 
   &:active {
@@ -27,8 +27,8 @@
   }
 
   & > svg {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     fill: #fff;
   }
 }
