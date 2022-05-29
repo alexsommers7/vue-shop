@@ -1,6 +1,6 @@
 <template>
-  <div class="toast" v-if="showToast">
-    <svg x="0px" y="0px" viewBox="0 0 426.667 426.667" style="enable-background:new 0 0 426.667 426.667;">
+  <div class="toast" v-if="toast.show" @click="toast.show = false">
+    <svg x="0px" y="0px" viewBox="0 0 426.667 426.667" style="enable-background: new 0 0 426.667 426.667">
       <g>
         <g>
           <path
@@ -12,16 +12,18 @@
       </g>
     </svg>
     <span v-if="removingFromCart">Item removed from cart</span>
-    <span v-else>Item added to cart!</span>
+    <span v-else>Item added to cart</span>
   </div>
 </template>
 
 <script>
+import { mapWritableState } from 'pinia';
+import { useCartStore } from '../../stores/cart.js';
+
 export default {
-  name: 'CartToast',
-  props: {
-    showToast: Boolean,
-    removingFromCart: Boolean,
+  name: 'ToastMessage',
+  computed: {
+    ...mapWritableState(useCartStore, ['toast', 'removingFromCart']),
   },
 };
 </script>
