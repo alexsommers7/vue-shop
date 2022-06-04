@@ -17,3 +17,7 @@ $design-box-shadow-default: 0 2rem 5rem 0 rgba(0, 0, 0, 0.1);
 // fonts
 $font-family-main: 'Mulish', sans-serif;
 $font-weight-default: 400;
+
+:root {
+  --scrollbar-width: 6px;
+}

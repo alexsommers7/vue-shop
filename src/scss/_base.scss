@@ -1,6 +1,8 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 *,
@@ -21,13 +23,22 @@ body {
   background-color: $color-background;
   overflow-x: hidden;
   overflow-y: scroll; // prevent slight layout shift when introducing content below the fold
-}
 
-body * {
-  // for prefers-reduced-motion
-  @include motionless {
-    transition: all 0s !important;
-    animation: none !important;
+  &::-webkit-scrollbar {
+    background-color: $color-background-light-grey;
+    width: var(--scrollbar-width);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-text;
+  }
+
+  * {
+    // for prefers-reduced-motion
+    @include motionless {
+      transition: all 0s !important;
+      animation: none !important;
+    }
   }
 }
 
