@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia';
 import { useCatalogStore } from '../stores/catalog.js';
+import { useSnackbarStore } from '../stores/snackbar.js';
 
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
       cartItems: JSON.parse(localStorage.getItem('cart') || '[]'),
       removingFromCart: false,
-      toast: {
-        show: false,
-        timeoutHide: {},
-        timeoutShow: {},
-      },
     };
   },
   getters: {
@@ -28,6 +24,7 @@ export const useCartStore = defineStore('cart', {
       return this.cartItems.find((item) => item.sku == sku);
     },
     addToCart(sku, quantity) {
+      const snackbar = useSnackbarStore();
       const cartItem = JSON.parse(JSON.stringify(this.findCatalogItemBySKU(sku))); // create a local copy
       const matchingItem = this.cartItems.find((item) => item.sku == cartItem.sku);
 
@@ -38,35 +35,21 @@ export const useCartStore = defineStore('cart', {
         matchingItem.quantity += quantity;
       }
 
-      this.removingFromCart = false; // context for toast
-      this.makeAToast();
+      snackbar.message = 'Item Added to Cart';
+      snackbar.showSnackbar();
       this.updateLocalStorage();
     },
     removeFromCart(sku) {
+      const snackbar = useSnackbarStore();
       const i = this.cartItems.findIndex((item) => item.sku == sku);
       this.cartItems.splice(i, 1);
 
-      this.removingFromCart = true; // context for toast
-      this.makeAToast();
+      snackbar.message = 'Item Removed From Cart';
+      snackbar.showSnackbar();
       this.updateLocalStorage();
     },
-    incrementItemQuantity(sku = 1) {
-      this.findCartItemBySKU(sku).quantity++;
-    },
-    decrementItemQuantity(sku) {
-      this.findCartItemBySKU(sku).quantity--;
-    },
-    makeAToast() {
-      if (this.toast.show) {
-        this.toast.show = false;
-        clearTimeout(this.toast.timeoutHide);
-        this.toast.timeoutShow = setTimeout(() => (this.toast.show = true), 500);
-      } else {
-        clearTimeout(this.toast.timeoutShow);
-        this.toast.show = true;
-      }
-
-      this.toast.timeoutHide = setTimeout(() => (this.toast.show = false), 4000);
+    updateItemQuantity(sku, quantity) {
+      this.findCartItemBySKU(sku).quantity = quantity;
     },
     updateLocalStorage() {
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
