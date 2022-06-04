@@ -46,3 +46,20 @@
     opacity: 1;
   }
 }
+@keyframes snackbar-right {
+  0% {
+    transform: translate(4.5rem, 0);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes snackbar-center {
+  0% {
+    transform: translate(50%, 4.5rem);
+  }
+  100% {
+    transform: translate(50%, 0);
+  }
+}
