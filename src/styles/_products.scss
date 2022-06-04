@@ -61,18 +61,19 @@
       left: 0;
       bottom: -8px;
       width: 30px;
-      border-bottom: 1px solid $color-primary;
+      border-bottom: 1px solid $primary;
     }
   }
 
   &__name {
     font-size: 1.4rem;
-    margin: 1.5rem 0 0.3rem; // extra on top to account for separator
-    color: $color-primary;
+    line-height: 1.2;
+    margin: 0.3rem 0;
+    color: $primary;
     font-weight: 600;
 
     &:hover {
-      color: rgba($color-primary, 0.85);
+      color: rgba($primary, 0.85);
     }
   }
 
@@ -84,14 +85,25 @@
   &__btn-wrapper {
     flex-grow: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     margin-top: 2rem;
   }
 
   &__btn {
     &--add-to-cart {
-      height: 47px;
-      margin-left: 16px;
+      height: 46px;
+      margin-left: 12px;
+    }
+  }
+
+  &__qty-select {
+    flex-basis: 90px;
+    flex-shrink: 0;
+    height: 46px;
+
+    .q-field__control {
+      height: 100% !important;
+      border-radius: $design-border-radius-default !important;
     }
   }
 }
@@ -113,7 +125,7 @@
     position: relative;
 
     .cover {
-      background: $color-background;
+      background: $background;
       height: 100%;
       overflow: hidden;
       mix-blend-mode: color;

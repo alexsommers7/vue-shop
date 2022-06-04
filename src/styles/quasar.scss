@@ -1,6 +1,7 @@
+@import './quasar.variables.scss';
+@import '~quasar-styl';
+
 @import 'mixins';
-@import 'variables';
-@import 'quasar-overrides';
 @import 'base';
 @import 'typography';
 @import 'load';

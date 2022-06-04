@@ -32,7 +32,7 @@
   &__icon {
     width: 2.5rem;
     height: 2.5rem;
-    fill: $color-primary;
+    fill: $primary;
 
     &:hover {
       opacity: 0.85;
@@ -46,7 +46,7 @@
   &__counter {
     align-self: flex-start;
     position: absolute;
-    top: calc(50% - 14px);
+    top: calc(50% - 25px);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1.15rem;
@@ -56,11 +56,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $color-white;
+    color: $white;
   }
 
   &__dropdown {
-    background-color: $color-background;
+    background-color: $background;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -144,7 +144,7 @@
     justify-content: space-between;
     padding: 1.5rem 0.25rem 1rem;
     margin: 0.5rem 0 0;
-    border-top: 1px solid rgba($color-text, 0.15);
+    border-top: 1px solid rgba($dark, 0.15);
 
     &:first-child {
       border-top: none;

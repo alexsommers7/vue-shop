@@ -12,25 +12,25 @@ html {
 }
 
 ::selection {
-  background: $color-highlight;
-  color: $color-highlight-text;
+  background: $highlight;
+  color: $highlight-text;
 }
 
 body {
   font-weight: $font-weight-default;
   line-height: 1.6;
-  color: $color-text;
-  background-color: $color-background;
+  color: $dark;
+  background-color: $background;
   overflow-x: hidden;
   overflow-y: scroll; // prevent slight layout shift when introducing content below the fold
 
   &::-webkit-scrollbar {
-    background-color: $color-background-light-grey;
+    background-color: $background-light;
     width: var(--scrollbar-width);
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $color-text;
+    background-color: $dark;
   }
 
   * {
@@ -96,5 +96,5 @@ img {
 a:hover,
 a:active,
 a:focus {
-  color: $color-white;
+  color: $white;
 }

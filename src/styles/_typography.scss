@@ -13,8 +13,8 @@
   cursor: pointer;
 
   &--primary {
-    background-color: $color-primary;
-    color: $color-white;
+    background-color: $primary;
+    color: $white;
   }
 
   &--filter {
@@ -27,12 +27,12 @@
     }
 
     &:not(.btn--primary) {
-      background-color: $color-background-light-grey;
-      color: $color-text;
+      background-color: $background-light;
+      color: $dark;
     }
 
     &:hover {
-      color: $color-white;
+      color: $white;
     }
   }
 
@@ -42,6 +42,6 @@
   }
 
   &:hover {
-    background-color: rgba($color-primary, 0.85);
+    background-color: rgba($primary, 0.85);
   }
 }

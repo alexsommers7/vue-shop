@@ -14,7 +14,7 @@
   border: none;
   margin: 0;
   padding: 0;
-  background-color: rgba($color-primary, 0.85);
+  background-color: rgba($primary, 0.85);
   z-index: 90;
   animation: fade-in-from-bottom 0.5s ease;
   transition: opacity 0.4s;
@@ -24,7 +24,7 @@
   }
 
   &:hover {
-    background-color: rgba($color-primary, 1);
+    background-color: rgba($primary, 1);
   }
 
   & > svg {

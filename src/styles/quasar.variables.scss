@@ -1,0 +1,32 @@
+// color - quasar defaults
+$primary: #023246;
+$secondary: #9c9990;
+$accent: #754f5b;
+
+$dark: #3f3f3f;
+
+$positive: #21ba45;
+$negative: #c10015;
+$info: #31ccec;
+$warning: #f2c037;
+
+// color - custom
+$white: #f8f8ff;
+$background: #fdfdfd;
+$background-light: #f1f1f1;
+$highlight: #a7a7a7;
+$highlight-text: #fff;
+
+@import '~quasar-variables-styl';
+
+// design
+$nav-mobile-height: 60px;
+$design-border-radius-default: 3px;
+$design-box-shadow-default: 0 2rem 5rem 0 rgba(0, 0, 0, 0.1);
+$font-family-main: 'Mulish', sans-serif;
+$font-weight-default: 400;
+
+// expose to js
+:root {
+  --scrollbar-width: 6px;
+}

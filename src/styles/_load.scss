@@ -35,12 +35,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: $color-background;
+      background-color: $background;
       z-index: 400;
     }
 
     &__spinner {
-      color: $color-primary;
+      color: $primary;
       display: inline-block;
       position: relative;
       width: 80px;
@@ -63,7 +63,7 @@
           width: 6px;
           height: 18px;
           border-radius: 20%;
-          background: $color-primary;
+          background: $primary;
         }
 
         &:nth-child(1) {
