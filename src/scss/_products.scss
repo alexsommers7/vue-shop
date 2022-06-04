@@ -67,7 +67,7 @@
 
   &__name {
     font-size: 1.4rem;
-    margin: 1.5rem 0 0.5rem; // extra on top to account for separator
+    margin: 1.5rem 0 0.3rem; // extra on top to account for separator
     color: $color-primary;
     font-weight: 600;
 
@@ -84,54 +84,48 @@
   &__btn-wrapper {
     flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
+    margin-top: 2rem;
   }
 
-  &__btn--add-to-cart {
-    margin-top: 1.5rem;
+  &__btn {
+    &--add-to-cart {
+      height: 47px;
+      margin-left: 16px;
+    }
   }
 }
 
-/* Quantity Box*/
-.quantity {
+.product__review-summary {
+  align-self: flex-start;
+  white-space: nowrap;
+  line-height: 1;
+  margin-bottom: 0.5rem;
   display: flex;
-  margin-top: 1rem;
+  align-items: center;
 
-  &__minus,
-  &__plus {
-    -webkit-appearance: none;
-    width: 30px;
-    height: 30px;
-    background: $color-background;
-    border-radius: $design-border-radius-default;
-    padding: 5px;
-    border: 1px solid #ddd;
-    display: inline-block;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  svg {
+    width: 20px;
+    fill: gold;
   }
-  input {
-    height: 30px;
-    width: 43px;
-    text-align: center;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: $design-border-radius-default;
+
+  .stars {
+    position: relative;
+
+    .cover {
+      background: $color-background;
+      height: 100%;
+      overflow: hidden;
+      mix-blend-mode: color;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  .count {
+    font-size: 16px;
+    margin-left: 5px;
     display: inline-block;
-
-    // Disable number arrows
-    &::-webkit-outer-spin-button, // Chrome, safari, edge, opera
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    &[type='number'] {
-      // firefox
-      -moz-appearance: textfield;
-    }
   }
 }
