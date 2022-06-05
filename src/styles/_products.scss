@@ -116,9 +116,8 @@
   display: flex;
   align-items: center;
 
-  svg {
-    width: 20px;
-    fill: gold;
+  i {
+    color: gold;
   }
 
   .stars,
@@ -128,6 +127,8 @@
 
   .stars {
     position: relative;
+    display: flex;
+    align-items: center;
 
     .cover {
       background: $background;
@@ -142,8 +143,33 @@
 
   .count {
     font-size: 16px;
-    line-height: 1.8;
-    margin-left: 5px;
+    line-height: 1.5;
     display: inline-block;
+  }
+}
+
+.review__breakdown {
+  width: 260px;
+
+  i {
+    color: gold;
+  }
+
+  .star--empty {
+    color: #e1e1e1;
+  }
+
+  .q-linear-progress {
+    min-width: 100px;
+  }
+
+  .percentage {
+    flex-basis: 33px;
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
+  .text-h6 {
+    line-height: 1.2;
   }
 }

@@ -5,32 +5,63 @@
     :title="`${product.reviews_average} stars | ${product.reviews_quantity} reviews`"
   >
     <div class="stars">
-      <svg viewBox="0 0 576 512" width="100" title="star">
-        <path
-          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-        /></svg
-      ><svg viewBox="0 0 576 512" width="100" title="star">
-        <path
-          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-        /></svg
-      ><svg viewBox="0 0 576 512" width="100" title="star">
-        <path
-          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-        /></svg
-      ><svg viewBox="0 0 576 512" width="100" title="star">
-        <path
-          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-        /></svg
-      ><svg viewBox="0 0 576 512" width="100" title="star">
-        <path
-          d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-        />
-      </svg>
-
+      <q-icon name="star" size="1.25rem" />
+      <q-icon name="star" size="1.25rem" />
+      <q-icon name="star" size="1.25rem" />
+      <q-icon name="star" size="1.25rem" />
+      <q-icon name="star" size="1.25rem" />
       <div class="cover" :style="{ width: `${100 - (product.reviews_average / 5) * 100}%` }"></div>
     </div>
 
-    <span class="count">{{ product.reviews_quantity || 'No Reviews Yet' }}</span>
+    <span class="count q-ml-sm">{{ product.reviews_quantity || 'No Reviews Yet' }}</span>
+    <button aria-label="Review breakdown" @click="getProductReviews" class="q-pl-none">
+      <q-icon name="expand_more" color="dark" />
+
+      <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]">
+        <div class="column q-pa-md" v-if="loading">
+          <q-skeleton type="rect" class="q-mt-sm" height="20px" />
+          <q-skeleton type="rect" class="q-mt-sm q-mb-sm" height="10px" />
+
+          <q-separator class="q-mt-xs q-mb-xs" />
+
+          <div class="q-mt-sm">
+            <q-skeleton type="rect" class="q-mt-sm" height="10px" />
+            <q-skeleton type="rect" class="q-mt-sm" height="10px" width="80%" />
+            <q-skeleton type="rect" class="q-mt-sm" height="10px" width="60%" />
+            <q-skeleton type="rect" class="q-mt-sm" height="10px" width="40%" />
+            <q-skeleton type="rect" class="q-mt-sm" height="10px" width="20%" />
+          </div>
+        </div>
+
+        <div class="column q-pa-md" v-else>
+          <p class="text-h6">
+            <strong class="text-primary">{{ product.reviews_average }}</strong> out of
+            <strong class="text-primary">5</strong> stars
+          </p>
+
+          <p class="font-muted q-pb-xs">
+            {{ product.reviews_quantity }} {{ product.reviews_quantity === 1 ? 'Review' : 'Reviews' }}
+          </p>
+
+          <q-separator class="q-mt-xs q-mb-xs" />
+
+          <div class="row no-wrap items-center q-mt-sm" v-for="rating in [5, 4, 3, 2, 1]" :key="rating">
+            <q-icon
+              :name="rating >= star ? 'star' : 'star_border'"
+              size="1rem"
+              v-for="star in [1, 2, 3, 4, 5]"
+              :key="star"
+            />
+
+            <q-linear-progress :value="reviewBreakdown[rating] / product.reviews_quantity" class="q-ml-sm" />
+
+            <span class="q-ml-sm percentage"
+              >{{ ((reviewBreakdown[rating] / product.reviews_quantity) * 100).toFixed(0) }}%</span
+            >
+          </div>
+        </div>
+      </q-menu>
+    </button>
   </div>
 </template>
 
@@ -42,6 +73,36 @@ export default {
   computed: {
     ...mapStores(useCatalogStore),
   },
+  data() {
+    return {
+      loading: true,
+      reviews: [],
+      reviewBreakdown: {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
+    };
+  },
   props: ['product'],
+  methods: {
+    async getProductReviews() {
+      const res = await fetch(`https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews`);
+      const json = await res.json();
+
+      this.reviewBreakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+      json.data
+        .map((review) => review.rating)
+        .forEach(
+          (rating) =>
+            (this.reviewBreakdown[rating] = this.reviewBreakdown[rating] ? this.reviewBreakdown[rating] + 1 : 1)
+        );
+
+      this.loading = false;
+    },
+  },
 };
 </script>
