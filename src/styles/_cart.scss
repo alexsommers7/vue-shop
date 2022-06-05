@@ -46,7 +46,7 @@
   &__counter {
     align-self: flex-start;
     position: absolute;
-    top: calc(50% - 25px);
+    top: calc(50% - 18px);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1.15rem;
@@ -124,14 +124,10 @@
     }
   }
 
-  &__quantity {
-    opacity: 0.6;
-    font-size: 0.75rem;
-  }
-
   &__price {
-    margin-right: 15%;
-    font-weight: bold;
+    &--each {
+      font-size: 0.7rem;
+    }
   }
 
   &__remove {
@@ -155,10 +151,11 @@
       padding-bottom: 2rem;
     }
 
-    & img {
+    img {
       width: 4rem;
       height: 4rem;
       object-fit: contain;
+      margin-left: 1rem;
     }
 
     & > span {

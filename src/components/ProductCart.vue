@@ -23,25 +23,29 @@
           <li v-for="cartItem in cartStore.cartItems" :key="cartItem.sku" class="row cart__item">
             <div>
               <p :title="cartItem.name">{{ truncTitle(cartItem.name) }}</p>
-              <div class="quantity">
-                <button
-                  class="quantity__minus"
-                  @click="cartStore.decrementItemQuantity(cartItem.sku)"
-                  :disabled="cartItem.quantity < 2"
-                >
-                  -
-                </button>
-                <input type="number" min="1" v-model.number="cartItem.quantity" class="quantity__value" />
-                <button class="quantity__plus" @click="cartStore.incrementItemQuantity(cartItem.sku)">+</button>
-              </div>
+
+              <div class="font-muted">Qty: {{ cartItem.quantity }}</div>
+
               <button class="cart__remove btn--text" @click="cartStore.removeFromCart(cartItem.sku)">Remove</button>
             </div>
 
             <div class="flex-center">
-              <p class="cart__price" v-if="cartItem.quantity">
-                {{ prettyPriceUS(cartItem.sale_price * cartItem.quantity) }}
+              <div class="text-center" v-if="cartItem.quantity > 1">
+                <p class="cart__price">
+                  <strong>
+                    {{ prettyPriceUS(cartItem.sale_price * cartItem.quantity) }}
+                  </strong>
+                </p>
+
+                <p class="font-muted cart__price--each">{{ prettyPriceUS(cartItem.sale_price) }} ea.</p>
+              </div>
+
+              <p class="cart__price" v-else>
+                <strong>
+                  {{ prettyPriceUS(cartItem.sale_price) }}
+                </strong>
               </p>
-              <p class="cart__price" v-else>{{ prettyPriceUS(cartItem.sale_price) }}</p>
+
               <img :src="cartItem.image_main" :alt="cartItem.name" />
             </div>
           </li>
