@@ -37,15 +37,15 @@ export const useCartStore = defineStore('cart', {
 
       Notify.create({
         message: 'Item Added to Cart',
-        actions: [
-          {
-            label: 'View Cart',
-            color: 'white',
-            handler: () => {
-              console.log('TODO - show cart');
-            },
-          },
-        ],
+        // actions: [
+        //   {
+        //     label: 'View Cart',
+        //     color: 'white',
+        //     handler: () => {
+        //       console.log('TODO - show cart');
+        //     },
+        //   },
+        // ],
       });
 
       this.updateLocalStorage();
