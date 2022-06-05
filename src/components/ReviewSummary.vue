@@ -77,13 +77,7 @@ export default {
     return {
       loading: true,
       reviews: [],
-      reviewBreakdown: {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-      },
+      reviewBreakdown: {},
     };
   },
   props: ['product'],
