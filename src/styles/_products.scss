@@ -9,7 +9,7 @@
 }
 .product {
   background-color: #fff;
-  box-shadow: $design-box-shadow-default;
+  box-shadow: $shadow;
   border-radius: 3px;
   font-size: 1.6rem;
   text-align: center;
@@ -68,7 +68,7 @@
   &__name {
     font-size: 1.4rem;
     line-height: 1.2;
-    margin: 0.3rem 0;
+    margin: 1.3rem 0 0.3rem; // extra on top for separator
     color: $primary;
     font-weight: 600;
 
@@ -97,13 +97,13 @@
   }
 
   &__qty-select {
-    flex-basis: 90px;
+    flex-basis: 75px;
     flex-shrink: 0;
     height: 46px;
 
     .q-field__control {
       height: 100% !important;
-      border-radius: $design-border-radius-default !important;
+      border-radius: $radius !important;
     }
   }
 }
@@ -119,6 +119,11 @@
   svg {
     width: 20px;
     fill: gold;
+  }
+
+  .stars,
+  .count {
+    height: 25px;
   }
 
   .stars {
@@ -137,6 +142,7 @@
 
   .count {
     font-size: 16px;
+    line-height: 1.8;
     margin-left: 5px;
     display: inline-block;
   }
