@@ -17,7 +17,7 @@
     <button aria-label="Review breakdown" @click="getProductReviews" class="q-pl-none">
       <q-icon name="expand_more" color="dark" />
 
-      <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]">
+      <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]" ref="breakdown">
         <div class="column q-pa-md" v-if="loading">
           <q-skeleton type="rect" class="q-mt-sm" height="20px" />
           <q-skeleton type="rect" class="q-mt-sm q-mb-sm" height="10px" />
@@ -68,6 +68,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useCatalogStore } from '../stores/catalog.js';
+import { Notify } from 'quasar';
 
 export default {
   computed: {
@@ -83,19 +84,30 @@ export default {
   props: ['product'],
   methods: {
     async getProductReviews() {
-      const res = await fetch(`https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews`);
-      const json = await res.json();
+      try {
+        this.loading = true;
+        const res = await fetch(`https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews`);
+        const json = await res.json();
 
-      this.reviewBreakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        this.reviewBreakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-      json.data
-        .map((review) => review.rating)
-        .forEach(
-          (rating) =>
-            (this.reviewBreakdown[rating] = this.reviewBreakdown[rating] ? this.reviewBreakdown[rating] + 1 : 1)
-        );
+        json.data
+          .map((review) => review.rating)
+          .forEach(
+            (rating) =>
+              (this.reviewBreakdown[rating] = this.reviewBreakdown[rating] ? this.reviewBreakdown[rating] + 1 : 1)
+          );
 
-      this.loading = false;
+        this.loading = false;
+      } catch (err) {
+        Notify.create({
+          message: 'Something went wrong. Please try again later.',
+          type: 'negative',
+        });
+
+        setTimeout(() => this.$refs.breakdown.hide(), 500);
+        console.error(err);
+      }
     },
   },
 };
