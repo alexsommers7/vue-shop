@@ -24,6 +24,15 @@
       <p class="product__price">{{ prettyPriceUS(product.sale_price) }}</p>
 
       <div class="product__btn-wrapper">
+        <q-select
+          v-model.number="selectedQty"
+          class="product__qty-select"
+          :options="qtyOptions"
+          label="Qty"
+          outlined
+          dense
+        />
+
         <button
           class="btn btn--primary product__btn product__btn--add-to-cart"
           :title="`Add to cart - ${product.name}`"
@@ -48,6 +57,7 @@ export default {
   emits: ['updateModal', 'updateQuantity'],
   data() {
     return {
+      qtyOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       selectedQty: 1,
     };
   },
@@ -65,8 +75,8 @@ export default {
       this.$emit('updateQuantity', item, quantity);
     },
     onAddToCart(item) {
-      this.cartStore.addToCart(item.sku, item.quantity);
-      item.quantity = 1; // reset
+      this.cartStore.addToCart(item.sku, this.selectedQty);
+      this.selectedQty = 1;
     },
   },
   components: { ReviewSummary },
