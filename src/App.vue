@@ -33,8 +33,6 @@
 
     <ProductGrid :renderedNavHeight="renderedNavHeight" ref="productGrid"></ProductGrid>
 
-    <SnackBar></SnackBar>
-
     <transition v-if="isScrolling" name="fade">
       <button
         aria-label="Return to the top of the page"
@@ -42,14 +40,7 @@
         class="toTop"
         @click="smoothScrollToTop"
       >
-        <svg class="icon icon-chevron-thin-up">
-          <use xlink:href="#icon-chevron-thin-up"></use>
-          <symbol id="icon-chevron-thin-up" viewBox="0 0 20 20">
-            <path
-              d="M2.582 13.891c-0.272 0.268-0.709 0.268-0.979 0s-0.271-0.701 0-0.969l7.908-7.83c0.27-0.268 0.707-0.268 0.979 0l7.908 7.83c0.27 0.268 0.27 0.701 0 0.969s-0.709 0.268-0.978 0l-7.42-7.141-7.418 7.141z"
-            ></path>
-          </symbol>
-        </svg>
+        <q-icon name="keyboard_arrow_up" color="white" size="2.25rem" />
       </button>
     </transition>
 
@@ -66,7 +57,6 @@ import ProductGrid from './components/ProductGrid';
 import FilterProducts from './components/FilterProducts';
 import SortProducts from './components/SortProducts';
 import ProductCart from './components/ProductCart';
-import SnackBar from './components/global/SnackBar';
 
 import { mapStores } from 'pinia';
 import { useCatalogStore } from './stores/catalog.js';
@@ -127,7 +117,6 @@ export default {
     FilterProducts,
     SortProducts,
     ProductCart,
-    SnackBar,
   },
 };
 </script>

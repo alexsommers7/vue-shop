@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useCatalogStore } from '../stores/catalog.js';
-import { useSnackbarStore } from '../stores/snackbar.js';
+import { Notify } from 'quasar';
 
 export const useCartStore = defineStore('cart', {
   state: () => {
@@ -24,29 +24,44 @@ export const useCartStore = defineStore('cart', {
       return this.cartItems.find((item) => item.sku == sku);
     },
     addToCart(sku, quantity) {
-      const snackbar = useSnackbarStore();
-      const cartItem = JSON.parse(JSON.stringify(this.findCatalogItemBySKU(sku))); // create a local copy
-      const matchingItem = this.cartItems.find((item) => item.sku == cartItem.sku);
+      const cartItem = JSON.parse(JSON.stringify(this.findCatalogItemBySKU(sku))); // local copy
+      const matchingItem = this.cartItems.find((item) => item.sku === cartItem.sku);
 
       if (!matchingItem) {
         cartItem.quantity = quantity;
         this.cartItems.unshift(cartItem);
       } else {
+        if (matchingItem.quantity + quantity > 10) return this.onItemMaxReached();
         matchingItem.quantity += quantity;
       }
 
-      snackbar.message = 'Item Added to Cart';
-      snackbar.showSnackbar();
+      Notify.create({
+        message: 'Item Added to Cart',
+        actions: [
+          {
+            label: 'View Cart',
+            color: 'white',
+            handler: () => {
+              console.log('TODO - show cart');
+            },
+          },
+        ],
+      });
+
       this.updateLocalStorage();
     },
     removeFromCart(sku) {
-      const snackbar = useSnackbarStore();
       const i = this.cartItems.findIndex((item) => item.sku == sku);
       this.cartItems.splice(i, 1);
 
-      snackbar.message = 'Item Removed From Cart';
-      snackbar.showSnackbar();
+      Notify.create({ message: 'Item Removed From Cart' });
       this.updateLocalStorage();
+    },
+    onItemMaxReached() {
+      Notify.create({
+        message: 'Max quantity per item is 10',
+        type: 'negative',
+      });
     },
     updateItemQuantity(sku, quantity) {
       this.findCartItemBySKU(sku).quantity = quantity;
