@@ -6,7 +6,7 @@ export const useCatalogStore = defineStore('catalog', {
       items: [],
       categories: [],
       selectedCategory: 'all',
-      recordCount: 20,
+      recordCount: 25,
       sortValue: '',
     };
   },
