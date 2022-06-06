@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper" :class="{ loading: isLoading }">
     <div class="loading__content">
-      <q-spinner color="primary" size="3rem" :thickness="2" />
+      <q-spinner color="primary" size="3rem" :thickness="5" />
     </div>
 
     <nav class="row nav full-width">
