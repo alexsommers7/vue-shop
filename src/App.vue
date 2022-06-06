@@ -1,20 +1,7 @@
 <template>
   <div class="wrapper" :class="{ loading: isLoading }">
     <div class="loading__content">
-      <div class="loading__spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <q-spinner color="primary" size="3rem" :thickness="2" />
     </div>
 
     <nav class="row nav full-width">
