@@ -86,7 +86,10 @@ export default {
     async getProductReviews() {
       try {
         this.loading = true;
-        const res = await fetch(`https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews`);
+
+        const res = await fetch(
+          `https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews?fields=rating,-user`
+        );
         const json = await res.json();
 
         this.reviewBreakdown = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
