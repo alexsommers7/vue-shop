@@ -7,7 +7,7 @@
     <nav class="row nav full-width">
       <FilterProducts @visualReset="visualReset"></FilterProducts>
 
-      <SortProducts @visualReset="visualReset"></SortProducts>
+      <ProductSort @visualReset="visualReset"></ProductSort>
 
       <ProductCart :renderedNavHeight="renderedNavHeight"></ProductCart>
 
@@ -42,7 +42,7 @@
 <script>
 import ProductGrid from './components/ProductGrid';
 import FilterProducts from './components/FilterProducts';
-import SortProducts from './components/SortProducts';
+import ProductSort from './components/ProductSort';
 import ProductCart from './components/ProductCart';
 
 import { mapStores } from 'pinia';
@@ -102,7 +102,7 @@ export default {
   components: {
     ProductGrid,
     FilterProducts,
-    SortProducts,
+    ProductSort,
     ProductCart,
   },
 };
