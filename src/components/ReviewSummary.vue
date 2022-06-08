@@ -17,7 +17,7 @@
     <button aria-label="Review breakdown" @click="getProductReviews" class="q-pl-none">
       <q-icon name="expand_more" color="dark" />
 
-      <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]" ref="breakdown">
+      <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]" ref="breakdown" aria-live="polite">
         <div class="column q-pa-md" v-if="loading">
           <q-skeleton type="rect" class="q-mt-sm" height="20px" />
           <q-skeleton type="rect" class="q-mt-sm q-mb-sm" height="10px" />
