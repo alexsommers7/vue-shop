@@ -8,6 +8,10 @@ export const useCatalogStore = defineStore('catalog', {
       selectedCategory: 'all',
       recordCount: 25,
       sortValue: '',
+      sortOptions: [
+        { label: 'Price, Low to High', value: 0 },
+        { label: 'Price, High to Low', value: 1 },
+      ],
     };
   },
   actions: {
@@ -31,12 +35,15 @@ export const useCatalogStore = defineStore('catalog', {
         console.error(err);
       }
     },
-    async getProduct() {},
     sortProducts() {
       this.items = this.items.sort((a, b) => {
-        // 0 is low-to-high, 1 is high-to-low
         return this.sortValue === 0 ? a.sale_price - b.sale_price : b.sale_price - a.sale_price;
       });
     },
+    setSort(val) {
+      this.sortValue = val;
+      this.sortProducts();
+    },
+    async getProduct() {},
   },
 });
