@@ -18,10 +18,10 @@ export const useCartStore = defineStore('cart', {
   actions: {
     findCatalogItemBySKU(sku) {
       const catalogStore = useCatalogStore();
-      return catalogStore.items.find((item) => item.sku == sku);
+      return catalogStore.items.find((item) => item.sku === sku);
     },
     findCartItemBySKU(sku) {
-      return this.cartItems.find((item) => item.sku == sku);
+      return this.cartItems.find((item) => item.sku === sku);
     },
     addToCart(sku, quantity) {
       const cartItem = JSON.parse(JSON.stringify(this.findCatalogItemBySKU(sku))); // local copy
