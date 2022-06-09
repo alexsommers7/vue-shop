@@ -51,8 +51,7 @@ export const useCartStore = defineStore('cart', {
       this.updateLocalStorage();
     },
     removeFromCart(sku) {
-      const i = this.cartItems.findIndex((item) => item.sku == sku);
-      this.cartItems.splice(i, 1);
+			this.cartItems = this.cartItems.filter(item => item.sku != sku);
 
       Notify.create({ message: 'Item Removed From Cart' });
       this.updateLocalStorage();
