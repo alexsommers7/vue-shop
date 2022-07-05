@@ -7,39 +7,43 @@
         :alt="`${product.name}`"
         :data-sku="product.sku"
         @click="updateModal(product)"
+        aria-label="Product Details Coming Soon"
+        title="Product Details Coming Soon"
       />
     </button>
 
     <div class="product__data">
       <p class="product__category">{{ product.category.name }}</p>
 
-      <button class="btn--text" aria-label="View item details">
-        <h2 class="product__name" :title="`See Details: ${product.name}`" @click="updateModal(product)">
+      <button class="btn--text" aria-label="View item details" title="Product Details Coming Soon">
+        <h2
+          class="product__name"
+          :title="`Product Details Coming Soon | ${product.name}`"
+          @click="updateModal(product)"
+        >
           {{ truncTitle(product.name) }}
         </h2>
       </button>
 
       <ReviewSummary :product="product"></ReviewSummary>
 
-      <p class="product__price">{{ prettyPriceUS(product.sale_price) }}</p>
+      <p class="product__price">
+        {{ prettyPriceUS(product.sale_price) }}
+      </p>
 
       <div class="product__btn-wrapper">
-        <q-select
-          v-model.number="selectedQty"
-          class="product__qty-select"
-          :options="qtyOptions"
-          label="Qty"
-          outlined
-          dense
-        />
+        <q-select v-model.number="selectedQty" class="product__qty-select" :options="qtyOptions" outlined dense />
 
-        <button
-          class="btn btn--primary product__btn product__btn--add-to-cart"
+        <q-btn
+          class="btn--add-to-cart"
+          color="primary"
+          size="14px"
           :title="`Add to cart - ${product.name}`"
           @click="onAddToCart(product)"
+          unelevated
         >
           Add To Cart
-        </button>
+        </q-btn>
       </div>
     </div>
   </article>
@@ -57,19 +61,22 @@ export default {
   emits: ['updateModal', 'updateQuantity'],
   data() {
     return {
-      qtyOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
       selectedQty: 1,
     };
   },
   props: ['product'],
   computed: {
     ...mapStores(useCartStore),
+    qtyOptions() {
+      return this.cartStore.qtyOptions;
+    },
   },
   methods: {
     prettyPriceUS,
     truncTitle,
-    updateModal(item) {
-      this.$emit('updateModal', item);
+    updateModal() {
+      // param: item
+      // this.$emit('updateModal', item);
     },
     updateQuantity(item, quantity) {
       this.$emit('updateQuantity', item, quantity);
