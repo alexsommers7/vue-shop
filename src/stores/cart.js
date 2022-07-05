@@ -1,19 +1,22 @@
 import { defineStore } from 'pinia';
 import { useCatalogStore } from '../stores/catalog.js';
 import { Notify } from 'quasar';
+import { prettyPriceUS } from '../utils/utilities';
 
 export const useCartStore = defineStore('cart', {
   state: () => {
     return {
       cartItems: JSON.parse(localStorage.getItem('cart') || '[]'),
+      quantities: [...Array(10).keys()].map((i) => ++i),
       removingFromCart: false,
     };
   },
   getters: {
-    uniqueCartItems: (state) => new Set(state.cartItems).size,
-    nonUniqueCartItems: (state) => parseFloat(state.cartItems.reduce((acc, el) => acc + el.quantity || 1, 0)),
-    total: (state) =>
-      parseFloat(state.cartItems.reduce((acc, el) => acc + el.sale_price * el.quantity || el.sale_price, 0).toFixed(2)),
+    uniqueCartItems: (state) => [...new Set(state.cartItems)],
+    uniqueCartItemCount: (state) => new Set(state.cartItems).size,
+    nonUniqueCartItemCount: (state) => parseFloat(state.cartItems.reduce((acc, el) => acc + el.quantity || 1, 0)),
+    qtyOptions: (state) => [...state.quantities],
+    total: (state) => prettyPriceUS(state.cartItems.reduce((acc, el) => acc + el.sale_price * el.quantity, 0)),
   },
   actions: {
     findCatalogItemBySKU(sku) {
@@ -31,8 +34,10 @@ export const useCartStore = defineStore('cart', {
         cartItem.quantity = quantity;
         this.cartItems.unshift(cartItem);
       } else {
-        if (matchingItem.quantity + quantity > 10) return this.onItemMaxReached();
-        matchingItem.quantity += quantity;
+        if (matchingItem.quantity + quantity > 10) {
+          matchingItem.quantity = 10;
+          this.onItemMaxReached();
+        } else matchingItem.quantity += quantity;
       }
 
       Notify.create({
@@ -42,7 +47,7 @@ export const useCartStore = defineStore('cart', {
         //     label: 'View Cart',
         //     color: 'white',
         //     handler: () => {
-        //       console.log('TODO - show cart');
+        //       console.log('TODO - send to cart page');
         //     },
         //   },
         // ],
@@ -62,8 +67,10 @@ export const useCartStore = defineStore('cart', {
         type: 'negative',
       });
     },
-    updateItemQuantity(sku, quantity) {
-      this.findCartItemBySKU(sku).quantity = quantity;
+    onQtyUpdated() {
+      Notify.create({
+        message: 'Item Quantity Updated',
+      });
     },
     updateLocalStorage() {
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
