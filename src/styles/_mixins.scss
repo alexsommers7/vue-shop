@@ -36,12 +36,6 @@
   }
 }
 
-@mixin ieOnly {
-  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    @content;
-  }
-}
-
 @mixin motionless {
   @media (prefers-reduced-motion) {
     @content;

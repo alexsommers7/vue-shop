@@ -18,6 +18,9 @@
 .font-muted {
   color: $muted;
 }
+.bg-default {
+  background-color: $background;
+}
 .screen-reader-only {
   border: 0;
   clip: rect(1px, 1px, 1px, 1px);
@@ -28,6 +31,24 @@
   overflow: hidden;
   position: absolute !important;
   word-wrap: normal !important;
+}
+.q-notifications__list--bottom {
+  bottom: 33px;
+}
+.q-item__label + .q-item__label.mt-0 {
+  margin-top: 0;
+}
+.q-item > .q-item__section--thumbnail:first-child {
+  margin-left: 0;
+}
+.font-10 {
+  font-size: 10px;
+}
+.font-11 {
+  font-size: 11px;
+}
+.color-background {
+  background-color: $background;
 }
 .no-scroll {
   overflow-y: hidden;

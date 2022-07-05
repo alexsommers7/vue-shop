@@ -19,7 +19,7 @@
     visibility: visible;
     pointer-events: auto;
 
-    & .modal__content {
+    .modal__content {
       transform: translate(-50%, -50%) scale(1);
       transition: all 0.2s ease-out;
     }
@@ -151,7 +151,7 @@
   }
 
   &__text {
-    border-top: 2px solid #cecece;
+    border-top: 2px solid $border;
     font-size: 1rem;
     text-align: left;
     padding: 1rem 0 0;

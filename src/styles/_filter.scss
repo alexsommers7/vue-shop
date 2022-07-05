@@ -1,0 +1,21 @@
+.filter {
+  &__item {
+    border-top: 1px solid $border;
+
+    &:last-of-type {
+      border-bottom: 1px solid $border;
+    }
+  }
+}
+
+.q-field--dense .q-field__label {
+  top: 13px;
+}
+
+.q-field__append {
+  padding-top: 7px;
+}
+
+.q-card__section {
+  border-top: 1px solid $border !important;
+}

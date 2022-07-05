@@ -5,18 +5,19 @@ $accent: #754f5b;
 
 $dark: #3f3f3f;
 
-$positive: #21ba45;
+$positive: $primary;
 $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
 
 // color - custom
 $white: #f8f8ff;
-$background: #fdfdfd;
+$background: #fafafa;
 $background-light: #f1f1f1;
 $highlight: #a7a7a7;
 $highlight-text: #fff;
 $muted: #9d9d9d;
+$border: #e3e3e3;
 
 @import '~quasar-variables-styl';
 
@@ -29,5 +30,5 @@ $font-weight-default: 400;
 
 // expose to js
 :root {
-  --scrollbar-width: 6px;
+  --scrollbar-width: 4px;
 }

@@ -41,6 +41,15 @@
     padding: 0;
   }
 
+  &--add-to-cart {
+    height: 40px;
+    flex-grow: 1;
+  }
+
+  &--remove-from-cart {
+    color: #7e7e7e;
+  }
+
   &:hover {
     background-color: rgba($primary, 0.85);
   }
