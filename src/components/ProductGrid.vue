@@ -1,25 +1,55 @@
 /* eslint-disable vue/no-v-for-template-key */
 <template>
   <section>
-    <h1 class="screen-reader-only">Shop Products</h1>
+    <div x-if="productsLocal.length">
+      <div class="row products text-center">
+        <div class="products__controls">
+          <q-btn
+            flat
+            dense
+            round
+            color="primary"
+            icon="filter_alt"
+            class="filter q-mr-sm"
+            aria-label="Toggle filter sidebar"
+            title="Toggle filter sidebar"
+            @click="toggleLeftDrawer"
+          />
+          <ProductSort></ProductSort>
+        </div>
+        <ProductCard
+          v-for="product in productsLocal"
+          :product="product"
+          :key="product.sku"
+          @updateModal="updateModal"
+          @updateQuantity="updateQuantity"
+        ></ProductCard>
+      </div>
 
-    <transition-group name="list" tag="div" class="row products text-center" mode="out-in">
-      <ProductCard
-        v-for="product in filteredProductList"
-        :product="product"
-        :key="product.sku"
-        @updateModal="updateModal"
-        @updateQuantity="updateQuantity"
-      ></ProductCard>
-    </transition-group>
+      <div class="row justify-center q-mx-auto q-pt-sm q-pb-lg">
+        <q-pagination
+          v-model="currentPage"
+          color="primary"
+          :max="Math.ceil(catalogStore.itemsTotal / catalogStore.productAPIParams.limit)"
+          :max-pages="4"
+          boundary-numbers
+        />
+      </div>
 
-    <transition name="fade-scale" mode="out-in">
-      <Modal :modalData="modalData"></Modal>
-    </transition>
+      <transition name="fade-scale" mode="out-in">
+        <Modal :modalData="modalData"></Modal>
+      </transition>
+    </div>
+
+    <div class="column items-center font-muted q-mt-xl q-pt-xl" x-else>
+      <q-icon name="search" color="background" size="2.5rem" />
+      <p class="color-background text-h6">No Products Found</p>
+    </div>
   </section>
 </template>
 
 <script>
+import ProductSort from './ProductSort';
 import Modal from './ProductModal';
 import ProductCard from './ProductCard';
 import { prettyPriceUS, truncTitle } from '../utils/utilities';
@@ -31,6 +61,7 @@ export default {
   name: 'ProductGrid',
   data() {
     return {
+      currentPage: 1,
       modalData: {
         openTriggered: false,
         selectedImagePath: '',
@@ -46,33 +77,17 @@ export default {
     productsLocal() {
       return [...this.catalogStore.items];
     },
-    filteredProductList() {
-      return this.catalogStore.selectedCategory === 'all'
-        ? this.productsLocal
-        : this.productsLocal.filter((product) => product.category.name === this.catalogStore.selectedCategory);
-    },
-    navHeight() {
-      return `${this.renderedNavHeight}px`;
-    },
   },
   watch: {
-    navHeight: {
+    currentPage: {
       handler: function () {
-        const modal = this.$el.querySelector('.modal');
-        modal.style.top = this.navHeight;
-        modal.style.height = `calc(100% - ${this.navHeight})`;
+        this.catalogStore.paginate(this.currentPage);
       },
     },
-  },
-  props: {
-    renderedNavHeight: Number,
   },
   methods: {
     prettyPriceUS,
     truncTitle,
-    findItemBySKU(sku) {
-      return this.filteredProductList.find((item) => item.sku == sku);
-    },
     updateModal(item) {
       this.modalData = {}; // reset in case same item is clicked on
       this.modalData.selectedImagePath = item.image_main;
@@ -85,12 +100,15 @@ export default {
     updateQuantity(item, qty) {
       item.qty = qty;
     },
+    toggleLeftDrawer() {
+      this.catalogStore.leftDrawerOpen = !this.catalogStore.leftDrawerOpen;
+    },
   },
   mounted() {
-    const scrollbarWidth = window.innerWidth - document.body.clientWidth + 'px';
-    document.documentElement.style.setProperty('--scrollbarWidth', scrollbarWidth);
+    this.catalogStore.getProducts();
   },
   components: {
+    ProductSort,
     Modal,
     ProductCard,
   },
