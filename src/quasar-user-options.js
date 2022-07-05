@@ -1,8 +1,12 @@
 import './styles/quasar.scss';
 import '@quasar/extras/material-icons/material-icons.css';
-import { Notify } from 'quasar';
+import { Notify, Loading } from 'quasar';
 
 export default {
+  plugins: {
+    Notify,
+    Loading,
+  },
   config: {
     notify: {
       type: 'positive',
@@ -10,8 +14,5 @@ export default {
       progressClass: 'progress',
       timeout: 3500,
     },
-  },
-  plugins: {
-    Notify,
   },
 };
