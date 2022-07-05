@@ -11,3 +11,7 @@ export function truncTitle(title) {
   const maxChars = 50;
   return title.length > maxChars ? `${title.substring(0, maxChars)}...` : title;
 }
+
+export function removeObjNull(obj) {
+  return Object.entries(obj).reduce((acc, [key, value]) => (value === null ? acc : ((acc[key] = value), acc)), {});
+}
