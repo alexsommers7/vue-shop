@@ -1,24 +1,22 @@
 <template>
-  <div class="wrapper" :class="{ loading: isLoading }">
-    <div class="loading__content">
-      <q-spinner color="primary" size="3rem" :thickness="5" />
-    </div>
+  <q-layout view="hHh lpR fFf" class="bg-grey-1">
+    <LayoutHeader></LayoutHeader>
 
-    <nav class="row nav full-width">
-      <FilterProducts @visualReset="visualReset"></FilterProducts>
+    <ProductFilter></ProductFilter>
 
-      <ProductSort @visualReset="visualReset"></ProductSort>
+    <q-page-container>
+      <!-- <router-view /> -->
+      <ProductGrid ref="productGrid"></ProductGrid>
+    </q-page-container>
 
-      <ProductCart :renderedNavHeight="renderedNavHeight"></ProductCart>
-
-      <button class="nav__button" aria-label="Navigation" @click="toggleNav">
-        <span class="nav__icon"></span>
-      </button>
-    </nav>
-
-    <div class="nav__backdrop"></div>
-
-    <ProductGrid :renderedNavHeight="renderedNavHeight" ref="productGrid"></ProductGrid>
+    <q-footer class="q-pa-xs" elevated>
+      <p>
+        Developed by
+        <a href="https://AlexSommers.com" target="_blank">Alex Sommers</a>
+        with
+        <a href="https://github.com/alexsommers7/StorePI" target="_blank">StorePI</a>
+      </p>
+    </q-footer>
 
     <transition v-if="isScrolling" name="fade">
       <button
@@ -27,59 +25,36 @@
         class="toTop"
         @click="smoothScrollToTop"
       >
-        <q-icon name="keyboard_arrow_up" color="white" size="2.25rem" />
+        <q-icon name="keyboard_arrow_up" color="white" size="2.5rem" />
       </button>
     </transition>
-
-    <div class="ie-message">
-      Internet Explore had a good run, but you deserve a better experience.<br /><span
-        >This website doesn't work here - try Edge instead!</span
-      >
-    </div>
-  </div>
+  </q-layout>
 </template>
 
 <script>
+import LayoutHeader from './components/LayoutHeader';
 import ProductGrid from './components/ProductGrid';
-import FilterProducts from './components/FilterProducts';
-import ProductSort from './components/ProductSort';
-import ProductCart from './components/ProductCart';
-
-import { mapStores } from 'pinia';
-import { useCatalogStore } from './stores/catalog.js';
-import { useCartStore } from './stores/cart.js';
+import ProductFilter from './components/ProductFilter';
 
 export default {
   name: 'App',
   data() {
     return {
-      isLoading: true,
       isScrolling: false,
       nonUniqueCartItems: 0,
       renderedNavHeight: 0,
       removingFromCart: false,
     };
   },
-  computed: {
-    ...mapStores(useCatalogStore, useCartStore),
-  },
   methods: {
-    visualReset() {
-      this.toggleNav();
-      this.smoothScrollToTop();
+    onClear() {
+      this.exactPhrase = '';
+      this.hasWords = '';
+      this.excludeWords = '';
     },
-    toggleNav() {
-      let navWrapper = this.$el.querySelector('nav.nav');
-      let mobileNavBackdrop = this.$el.querySelector('.nav__backdrop');
-      navWrapper.classList.toggle('in');
-      mobileNavBackdrop.addEventListener('click', () => {
-        navWrapper.classList.remove('in');
-      });
-
-      setTimeout(() => this.checkNavHeight(), 1000);
-    },
-    checkNavHeight() {
-      this.renderedNavHeight = this.$el.querySelector('.nav').getBoundingClientRect().height;
+    changeDate(option) {
+      this.byDate = option;
+      this.showDateOptions = false;
     },
     detectScroll() {
       document.body.scrollTop > 700 || document.documentElement.scrollTop > 700
@@ -91,19 +66,12 @@ export default {
     },
   },
   mounted() {
-    Promise.all([this.catalogStore.getCategories(), this.catalogStore.getProducts()]).then(
-      () => (this.isLoading = false)
-    );
-
-    this.checkNavHeight();
-    window.addEventListener('resize', this.checkNavHeight);
     window.addEventListener('scroll', this.detectScroll, { passive: true });
   },
   components: {
+    LayoutHeader,
     ProductGrid,
-    FilterProducts,
-    ProductSort,
-    ProductCart,
+    ProductFilter,
   },
 };
 </script>
