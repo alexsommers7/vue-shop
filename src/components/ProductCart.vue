@@ -22,7 +22,9 @@
         <ul class="cart__dropdown" v-if="showDropdown && cartStore.nonUniqueCartItems > 0">
           <li v-for="cartItem in cartStore.cartItems" :key="cartItem.sku" class="row cart__item">
             <div>
-              <p :title="cartItem.name">{{ truncTitle(cartItem.name) }}</p>
+              <p :title="cartItem.name">
+                {{ truncTitle(cartItem.name) }}
+              </p>
 
               <div class="font-muted">Qty: {{ cartItem.quantity }}</div>
 
