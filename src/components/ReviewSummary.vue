@@ -5,17 +5,22 @@
     :title="`${product.reviews_average} stars | ${product.reviews_quantity} reviews`"
   >
     <div class="stars">
-      <q-icon name="star" size="1.25rem" />
-      <q-icon name="star" size="1.25rem" />
-      <q-icon name="star" size="1.25rem" />
-      <q-icon name="star" size="1.25rem" />
-      <q-icon name="star" size="1.25rem" />
-      <div class="cover" :style="{ width: `${100 - (product.reviews_average / 5) * 100}%` }"></div>
+      <q-icon name="star" size="1rem" />
+      <q-icon name="star" size="1rem" />
+      <q-icon name="star" size="1rem" />
+      <q-icon name="star" size="1rem" />
+      <q-icon name="star" size="1rem" />
+      <div
+        class="cover"
+        :style="{
+          width: `${100 - (product.reviews_average / 5) * 100}%`,
+        }"
+      ></div>
     </div>
 
-    <span class="count q-ml-sm">{{ product.reviews_quantity || 'No Reviews Yet' }}</span>
-    <button aria-label="Review breakdown" @click="getProductReviews" class="q-pl-none">
-      <q-icon name="expand_more" color="dark" />
+    <span class="count q-ml-xs">{{ product.reviews_quantity || 'No Reviews Yet' }}</span>
+    <button aria-label="Review breakdown" @click="getProductReviews" class="q-pl-none row align-center">
+      <q-icon name="expand_more" color="dark" size="1rem" />
 
       <q-menu class="review__breakdown" anchor="bottom left" :offset="[100, 5]" ref="breakdown" aria-live="polite">
         <div class="column q-pa-md" v-if="loading">
@@ -35,12 +40,13 @@
 
         <div class="column q-pa-md" v-else>
           <p class="text-h6">
-            <strong class="text-primary">{{ product.reviews_average }}</strong> out of
-            <strong class="text-primary">5</strong> stars
+            <strong class="text-primary">{{ product.reviews_average }}</strong>
+            out of <strong class="text-primary">5</strong> stars
           </p>
 
           <p class="font-muted q-pb-xs">
-            {{ product.reviews_quantity }} {{ product.reviews_quantity === 1 ? 'Review' : 'Reviews' }}
+            {{ product.reviews_quantity }}
+            {{ product.reviews_quantity === 1 ? 'Review' : 'Reviews' }}
           </p>
 
           <q-separator class="q-mt-xs q-mb-xs" />
