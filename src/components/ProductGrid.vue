@@ -41,7 +41,7 @@
       </transition>
     </div>
 
-    <div class="column items-center font-muted q-mt-xl q-pt-xl" v-else>
+    <div class="column items-center font-muted q-mt-xl q-pt-xl products-empty" v-else>
       <q-icon name="search" color="background" size="2.5rem" />
       <p class="color-background text-h6">No Products Found</p>
     </div>

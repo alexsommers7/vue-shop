@@ -29,6 +29,10 @@
     }
   }
 
+  &-empty {
+    min-height: 60vh;
+  }
+
   @include respond(tab-land) {
     padding: 2.5rem 4rem 1.5rem;
   }
