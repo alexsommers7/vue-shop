@@ -23,6 +23,7 @@
                   type="checkbox"
                   color="primary"
                   v-model="catalogStore.filters"
+                  @update:model-value="$nextTick(() => catalogStore.getProducts())"
                 />
               </q-card-section>
             </q-scroll-area>
@@ -96,10 +97,6 @@ export default {
         options: [...this.catalogStore.categories],
         open: true,
       });
-    });
-
-    this.catalogStore.$subscribe((mutation) => {
-      if (mutation.events.key === 'filters') this.catalogStore.getProducts();
     });
   },
 };
