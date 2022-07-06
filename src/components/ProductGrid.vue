@@ -1,7 +1,7 @@
 /* eslint-disable vue/no-v-for-template-key */
 <template>
   <section>
-    <div x-if="productsLocal.length">
+    <div v-if="productsLocal.length">
       <div class="row products text-center">
         <div class="products__controls">
           <q-btn
@@ -41,7 +41,7 @@
       </transition>
     </div>
 
-    <div class="column items-center font-muted q-mt-xl q-pt-xl" x-else>
+    <div class="column items-center font-muted q-mt-xl q-pt-xl" v-else>
       <q-icon name="search" color="background" size="2.5rem" />
       <p class="color-background text-h6">No Products Found</p>
     </div>
