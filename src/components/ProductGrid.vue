@@ -1,7 +1,7 @@
 /* eslint-disable vue/no-v-for-template-key */
 <template>
   <section>
-    <div v-if="productsLocal.length">
+    <div>
       <div class="row products text-center">
         <div class="products__controls">
           <q-btn
@@ -17,6 +17,7 @@
           />
           <ProductSort></ProductSort>
         </div>
+
         <ProductCard
           v-for="product in productsLocal"
           :product="product"
@@ -26,7 +27,7 @@
         ></ProductCard>
       </div>
 
-      <div class="row justify-center q-mx-auto q-pt-sm q-pb-lg">
+      <div class="row justify-center q-mx-auto q-pt-sm q-pb-lg" v-if="productsLocal.length">
         <q-pagination
           v-model="currentPage"
           color="primary"
@@ -36,14 +37,14 @@
         />
       </div>
 
+      <div class="column items-center font-muted q-mt-xl q-pt-xl products-empty" v-else>
+        <q-icon name="search" color="background" size="2.5rem" />
+        <p class="color-background text-h6">No Products Found</p>
+      </div>
+
       <transition name="fade-scale" mode="out-in">
         <Modal :modalData="modalData"></Modal>
       </transition>
-    </div>
-
-    <div class="column items-center font-muted q-mt-xl q-pt-xl products-empty" v-else>
-      <q-icon name="search" color="background" size="2.5rem" />
-      <p class="color-background text-h6">No Products Found</p>
     </div>
   </section>
 </template>
