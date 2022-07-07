@@ -50,6 +50,20 @@
 .color-background {
   background-color: $background;
 }
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  display: inline-block;
+
+  &--green {
+    background-color: $green;
+  }
+
+  &--red {
+    background-color: $negative;
+  }
+}
 .no-scroll {
   overflow-y: hidden;
   width: calc(100% - var(--scrollbarWidth));

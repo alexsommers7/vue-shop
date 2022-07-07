@@ -44,6 +44,11 @@
   &--add-to-cart {
     height: 40px;
     flex-grow: 1;
+    border-top: 1px solid rgba($primary, 0.1);
+    border-radius: 0;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-bottom: -1rem;
   }
 
   &--remove-from-cart {

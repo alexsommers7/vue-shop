@@ -27,21 +27,34 @@
 
       <ReviewSummary :product="product"></ReviewSummary>
 
+      <p class="product__price--reg font-muted" v-if="product.regular_price > product.sale_price">
+        {{ prettyPriceUS(product.regular_price) }}
+      </p>
       <p class="product__price">
         {{ prettyPriceUS(product.sale_price) }}
       </p>
 
+      <div class="product__callout-wrapper">
+        <div class="callout">
+          <p v-if="product.in_stock"><span class="dot dot--green"></span> In Stock</p>
+          <p v-else><span class="dot dot--red"></span> Out of Stock</p>
+        </div>
+      </div>
+
       <div class="product__btn-wrapper">
-        <q-select v-model.number="selectedQty" class="product__qty-select" :options="qtyOptions" outlined dense />
+        <!-- <q-select v-model.number="selectedQty" class="product__qty-select" :options="qtyOptions" outlined dense /> -->
 
         <q-btn
           class="btn--add-to-cart"
-          color="primary"
+          color="white"
+          text-color="primary"
           size="14px"
-          :title="`Add to cart - ${product.name}`"
+          :title="`${product.in_stock ? 'Add to cart' : 'Out of stock'} - ${product.name}`"
           @click="onAddToCart(product)"
+          :disabled="!product.in_stock"
           unelevated
         >
+          <q-icon name="shopping_cart" size="1.25rem" color="primary" class="q-mr-sm"></q-icon>
           Add To Cart
         </q-btn>
       </div>

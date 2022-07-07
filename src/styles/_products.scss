@@ -106,13 +106,30 @@
   &__price {
     font-size: 1rem;
     font-weight: 400;
+
+    &--reg {
+      text-decoration: line-through;
+      font-size: 0.75rem;
+      text-align: left;
+      margin-bottom: -5px;
+    }
   }
 
   &__btn-wrapper {
     flex-grow: 1;
     display: flex;
     align-items: flex-end;
-    margin-top: 2rem;
+    flex-basis: 40px;
+  }
+
+  &__callout-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0 0;
+
+    .callout {
+      font-size: 0.8rem;
+    }
   }
 
   &__qty-select {
@@ -154,6 +171,7 @@
   line-height: 1;
   display: flex;
   align-items: center;
+  margin-bottom: 2px;
 
   i {
     color: gold;
