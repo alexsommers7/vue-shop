@@ -5,11 +5,11 @@
     :title="`${product.reviews_average} stars | ${product.reviews_quantity} reviews`"
   >
     <div class="stars">
-      <q-icon name="star" size="1rem" />
-      <q-icon name="star" size="1rem" />
-      <q-icon name="star" size="1rem" />
-      <q-icon name="star" size="1rem" />
-      <q-icon name="star" size="1rem" />
+      <q-icon name="star" size="1rem" color="yellow-14" />
+      <q-icon name="star" size="1rem" color="yellow-14" />
+      <q-icon name="star" size="1rem" color="yellow-14" />
+      <q-icon name="star" size="1rem" color="yellow-14" />
+      <q-icon name="star" size="1rem" color="yellow-14" />
       <div
         class="cover"
         :style="{
@@ -55,6 +55,7 @@
             <q-icon
               :name="rating >= star ? 'star' : 'star_border'"
               size="1rem"
+              color="yellow-14"
               v-for="star in [1, 2, 3, 4, 5]"
               :key="star"
             />

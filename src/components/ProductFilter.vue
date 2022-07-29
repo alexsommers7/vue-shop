@@ -1,7 +1,71 @@
 <template>
-  <q-drawer v-model="catalogStore.leftDrawerOpen" show-if-above bordered class="bg-white" :width="280">
+  <q-drawer v-model="catalogStore.leftDrawerOpen" show-if-above bordered class="bg-white" :width="250">
     <q-scroll-area class="fit">
       <q-list padding class="text-grey-8 q-pt-none">
+        <q-expansion-item class="filter__item" header-class="bg-default" label="Average Rating" default-opened>
+          <q-range
+            class="q-py-lg q-px-md"
+            v-model="review_filter"
+            @change="$nextTick(() => onReviewFilter())"
+            color="primary"
+            :min="0"
+            :max="5"
+            :step="0.5"
+            marker-labels
+            vertical
+            dense
+            snap
+          >
+            <template v-slot:marker-label-group="{ markerMap }">
+              <div
+                class="row items-center no-wrap"
+                :class="markerMap[review_filter.min].classes"
+                :style="markerMap[review_filter.min].style"
+              >
+                <q-icon v-if="review_filter.min === 0" size="sm" color="yellow-14" name="star_outline" />
+
+                <template v-else>
+                  <q-icon
+                    v-for="i in Math.floor(review_filter.min)"
+                    :key="i"
+                    size="sm"
+                    color="yellow-14"
+                    name="star_rate"
+                  />
+
+                  <q-icon
+                    v-if="review_filter.min > Math.floor(review_filter.min)"
+                    size="sm"
+                    color="yellow-14"
+                    name="star_half"
+                  />
+                </template>
+              </div>
+
+              <div
+                class="row items-center no-wrap"
+                :class="markerMap[review_filter.max].classes"
+                :style="markerMap[review_filter.max].style"
+              >
+                <q-icon
+                  v-for="i in Math.floor(review_filter.max)"
+                  :key="i"
+                  size="sm"
+                  color="yellow-14"
+                  name="star_rate"
+                />
+
+                <q-icon
+                  v-if="review_filter.max > Math.floor(review_filter.max)"
+                  size="sm"
+                  color="yellow-14"
+                  name="star_half"
+                />
+              </div>
+            </template>
+          </q-range>
+        </q-expansion-item>
+
         <q-expansion-item
           class="filter__item"
           header-class="bg-default"
@@ -58,27 +122,32 @@ export default {
           label: 'Best Seller',
           caption: '',
           options: [{ label: 'Yes', value: 'best_seller=true' }],
-          open: true,
+          open: false,
         },
         {
           label: 'Availability',
           caption: '',
           options: [{ label: 'In Stock', value: 'in_stock=true' }],
         },
-        // {
-        //   label: 'Rating',
-        //   caption: '',
-        //   options: [
-        //     { label: 'Battery too low', value: 'bat' },
-        //     { label: 'Friend request', value: 'friend' },
-        //     { label: 'Picture uploaded', value: 'upload' },
-        //   ],
-        // },
       ],
+      review_filter: {
+        min: 0,
+        max: 5,
+      },
     };
   },
   computed: {
     ...mapStores(useCatalogStore),
+  },
+  methods: {
+    onReviewFilter() {
+      // clear any existing review filters
+      this.catalogStore.filters = this.catalogStore.filters.filter((query) => !query.includes('reviews_average'));
+
+      this.catalogStore.filters.push(`reviews_average[gte]=${this.review_filter.min}`);
+      this.catalogStore.filters.push(`reviews_average[lte]=${this.review_filter.max}`);
+      this.catalogStore.getProducts();
+    },
   },
   mounted() {
     this.catalogStore.getBrands().then(() => {
