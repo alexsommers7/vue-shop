@@ -1,5 +1,5 @@
 <template>
-  <q-header bordered reveal class="bg-white text-grey-8">
+  <q-header bordered class="bg-white text-grey-8">
     <q-toolbar>
       <q-toolbar-title shrink class="row items-center no-wrap">
         <span class="q-ml-sm">Vue Shop</span>
