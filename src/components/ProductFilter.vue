@@ -102,6 +102,7 @@
           class="filter__item"
           header-class="bg-default"
           :label="filter.label"
+          :caption="getFilterCaption(filter)"
           :key="filter.label"
           :default-opened="filter.open"
         >
@@ -178,9 +179,11 @@ export default {
       this.review_filter = { min: 0, max: 5 };
       this.price_filter = { min: 0, max: this.catalogStore.mostExpensiveItemPrice };
     },
-    getOptionGroupCaption(filter) {
-      console.log(filter);
-      return filter;
+    getFilterCaption({ options }) {
+      return options
+        .filter((option) => this.catalogStore.filters.find((query) => query === option.value))
+        .map((filter) => filter.label)
+        .join(', ');
     },
   },
   mounted() {
