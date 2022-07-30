@@ -20,6 +20,7 @@ export const useCatalogStore = defineStore('catalog', {
 
       items: [],
       itemsTotal: 0,
+      mostExpensiveItemPrice: 0,
 
       categories: [],
 
@@ -91,6 +92,17 @@ export const useCatalogStore = defineStore('catalog', {
             value: `brand=${brand.split(' ').join('-')}`,
           };
         });
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    async getMostExpensiveProduct() {
+      try {
+        const res = await fetch('https://storepi.herokuapp.com/api/v1/products?sort=-sale_price&limit=1');
+        const json = await res.json();
+
+        this.mostExpensiveItemPrice = json.data[0].sale_price;
+        return json.data[0].sale_price;
       } catch (err) {
         console.error(err);
       }

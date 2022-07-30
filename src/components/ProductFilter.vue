@@ -2,11 +2,37 @@
   <q-drawer v-model="catalogStore.leftDrawerOpen" show-if-above bordered class="bg-white" :width="250">
     <q-scroll-area class="fit">
       <q-list padding class="text-grey-8 q-pt-none">
-        <q-expansion-item class="filter__item" header-class="bg-default" label="Average Rating" default-opened>
+        <q-expansion-item
+          class="filter__item"
+          header-class="bg-default"
+          label="Price"
+          :caption="`${prettyPriceUS(price_filter.min)} - ${prettyPriceUS(price_filter.max)}`"
+          default-opened
+        >
+          <q-range
+            class="q-py-lg q-px-md"
+            v-model="price_filter"
+            @change="$nextTick(() => onRangeFilter('sale_price', 'price_filter'))"
+            color="primary"
+            label-always
+            vertical
+            :min="0"
+            :max="catalogStore.mostExpensiveItemPrice"
+            :step="100"
+          />
+        </q-expansion-item>
+
+        <q-expansion-item
+          class="filter__item"
+          header-class="bg-default"
+          label="Average Rating"
+          :caption="`${review_filter.min} - ${review_filter.max} Stars`"
+          default-opened
+        >
           <q-range
             class="q-py-lg q-px-md"
             v-model="review_filter"
-            @change="$nextTick(() => onReviewFilter())"
+            @change="$nextTick(() => onRangeFilter('reviews_average', 'review_filter'))"
             color="primary"
             :min="0"
             :max="5"
@@ -101,6 +127,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useCatalogStore } from '../stores/catalog.js';
+import { prettyPriceUS } from '../utils/utilities';
 
 export default {
   name: 'ProductFilter',
@@ -134,18 +161,23 @@ export default {
         min: 0,
         max: 5,
       },
+      price_filter: {
+        min: 0,
+        max: 10000,
+      },
     };
   },
   computed: {
     ...mapStores(useCatalogStore),
   },
   methods: {
-    onReviewFilter() {
-      // clear any existing review filters
-      this.catalogStore.filters = this.catalogStore.filters.filter((query) => !query.includes('reviews_average'));
+    prettyPriceUS,
+    onRangeFilter(queryName, modelObj) {
+      // clear any existing filters
+      this.catalogStore.filters = this.catalogStore.filters.filter((query) => !query.includes(queryName));
 
-      this.catalogStore.filters.push(`reviews_average[gte]=${this.review_filter.min}`);
-      this.catalogStore.filters.push(`reviews_average[lte]=${this.review_filter.max}`);
+      this.catalogStore.filters.push(`${queryName}[gte]=${this[modelObj].min}`);
+      this.catalogStore.filters.push(`${queryName}[lte]=${this[modelObj].max}`);
       this.catalogStore.getProducts();
     },
   },
@@ -164,8 +196,12 @@ export default {
         label: 'Category',
         caption: '',
         options: [...this.catalogStore.categories],
-        open: true,
+        open: false,
       });
+    });
+
+    this.catalogStore.getMostExpensiveProduct().then((maxPrice) => {
+      this.price_filter.max = Math.round(100 * maxPrice) / 100;
     });
   },
 };
