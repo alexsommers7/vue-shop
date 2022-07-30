@@ -1,7 +1,7 @@
 <template>
   <q-header bordered reveal class="bg-white text-grey-8">
     <q-toolbar>
-      <q-toolbar-title v-if="$q.screen.gt.xs" shrink class="row items-center no-wrap">
+      <q-toolbar-title shrink class="row items-center no-wrap">
         <span class="q-ml-sm">Vue Shop</span>
       </q-toolbar-title>
 
