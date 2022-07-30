@@ -1,82 +1,7 @@
 <template>
   <q-header bordered class="bg-white text-grey-8">
     <q-toolbar>
-      <q-toolbar-title shrink class="row items-center no-wrap">
-        <span class="q-ml-sm">Vue Shop</span>
-      </q-toolbar-title>
-
       <q-space />
-
-      <!-- <q-input
-          class="GNL__toolbar-input"
-          outlined
-          dense
-          v-model="search"
-          color="bg-grey-7 shadow-1"
-          placeholder="Search for topics, locations & sources"
-        >
-          <template v-slot:prepend>
-            <q-icon v-if="search === ''" name="search" />
-            <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
-          </template>
-          <template v-slot:append>
-            <q-btn flat dense round aria-label="Menu" icon="arrow_drop_down">
-              <q-menu anchor="bottom end" self="top end">
-                <div class="q-pa-md" style="width: 400px">
-                  <div class="text-body2 text-grey q-mb-md">Narrow your search results</div>
-
-                  <div class="row items-center">
-                    <div class="col-3 text-subtitle2 text-grey">Exact phrase</div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="exactPhrase" />
-                    </div>
-
-                    <div class="col-3 text-subtitle2 text-grey">Has words</div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="hasWords" />
-                    </div>
-
-                    <div class="col-3 text-subtitle2 text-grey">Exclude words</div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="excludeWords" />
-                    </div>
-
-                    <div class="col-3 text-subtitle2 text-grey">Website</div>
-                    <div class="col-9 q-pl-md">
-                      <q-input dense v-model="byWebsite" />
-                    </div>
-
-                    <div class="col-12 q-pt-lg row justify-end">
-                      <q-btn
-                        flat
-                        dense
-                        no-caps
-                        color="grey-7"
-                        size="md"
-                        style="min-width: 68px"
-                        label="Search"
-                        v-close-popup
-                      />
-                      <q-btn
-                        flat
-                        dense
-                        no-caps
-                        color="grey-7"
-                        size="md"
-                        style="min-width: 68px"
-                        @click="onClear"
-                        label="Clear"
-                        v-close-popup
-                      />
-                    </div>
-                  </div>
-                </div>
-              </q-menu>
-            </q-btn>
-          </template>
-        </q-input>
-
-        <q-space /> -->
 
       <div class="q-gutter-sm row items-center no-wrap q-px-sm">
         <q-btn round dense unelevated color="grey-8" icon="shopping_cart">
@@ -91,7 +16,7 @@
               :thumb-style="{ width: '5px' }"
               v-if="cartStore.nonUniqueCartItemCount"
             >
-              <q-list class="q-py-xs q-px-md" separator>
+              <q-list separator>
                 <q-slide-item
                   v-for="item in cartItems"
                   :key="item.sku"
@@ -101,7 +26,7 @@
                   <template v-slot:right>
                     <q-icon name="delete" />
                   </template>
-                  <q-item class="q-py-md q-px-none">
+                  <q-item class="q-py-md q-px-md">
                     <q-item-section thumbnail>
                       <q-avatar square size="45px">
                         <img :src="item.image_main" alt="" draggable="false" />
@@ -113,7 +38,6 @@
                       <q-item-label lines="1" class="font-11 font-muted">{{
                         prettyPriceUS(item.sale_price)
                       }}</q-item-label>
-                      <!-- <q-item-label class="font-10" caption>QTY: {{ item.quantity }}</q-item-label> -->
                     </q-item-section>
 
                     <q-select
@@ -144,13 +68,6 @@
             <p class="text-center q-pa-lg" v-else>Your cart is empty</p>
           </q-menu>
         </q-btn>
-
-        <!-- <q-btn round flat>
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-            </q-avatar>
-            <q-tooltip>Account</q-tooltip>
-          </q-btn> -->
       </div>
     </q-toolbar>
   </q-header>

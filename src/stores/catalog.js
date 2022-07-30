@@ -36,9 +36,6 @@ export const useCatalogStore = defineStore('catalog', {
       leftDrawerOpen: false,
     };
   },
-  getters: {
-    productFilters: (state) => [...state.filters],
-  },
   actions: {
     async getProducts() {
       try {
@@ -107,6 +104,10 @@ export const useCatalogStore = defineStore('catalog', {
         console.error(err);
       }
     },
+    clearFilters() {
+      this.filters = [];
+      this.getProducts();
+    },
     setSort(val) {
       this.productAPIParams.sort = this.sortOptions.find((op) => op.value === val).query;
       this.productAPIParams.page = 1;
@@ -116,6 +117,5 @@ export const useCatalogStore = defineStore('catalog', {
       this.productAPIParams.page = val;
       this.getProducts();
     },
-    async getProduct() {},
   },
 });
