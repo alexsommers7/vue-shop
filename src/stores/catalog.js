@@ -43,6 +43,9 @@ export const useCatalogStore = defineStore('catalog', {
       try {
         Loading.show({ delay: 250 });
 
+        // reset pagination
+        this.productAPIParams.page = 1;
+
         // remove null fields
         this.productAPIParams = removeObjNull(this.productAPIParams);
 
