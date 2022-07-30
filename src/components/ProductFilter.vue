@@ -1,6 +1,11 @@
 <template>
   <q-drawer v-model="catalogStore.leftDrawerOpen" show-if-above bordered class="bg-white" :width="250">
     <q-scroll-area class="fit">
+      <div class="row justify-between items-baseline q-px-xs">
+        <span class="text-h6 q-py-md q-px-sm">Filters</span>
+        <q-btn unelevated label="Reset All" class="text-caption text-underline" @click="onFilterReset()"></q-btn>
+      </div>
+
       <q-list padding class="text-grey-8 q-pt-none">
         <q-expansion-item
           class="filter__item"
@@ -93,12 +98,11 @@
         </q-expansion-item>
 
         <q-expansion-item
+          v-for="filter in filters"
           class="filter__item"
           header-class="bg-default"
           :label="filter.label"
-          :caption="filter.caption"
           :key="filter.label"
-          v-for="filter in filters"
           :default-opened="filter.open"
         >
           <q-card>
@@ -134,17 +138,6 @@ export default {
   data() {
     return {
       filters: [
-        // {
-        //   label: 'Price',
-        //   caption: '',
-        //   options: [
-        //     // TODO - range slider
-        //     { label: '$50 and under', value: 'sale_price[lte]=50' },
-        //     { label: '$100 and under', value: 'sale_price[lte]=100' },
-        //     { label: '$1,000 and under', value: 'sale_price[lte]=1000' },
-        //   ],
-        //   open: true,
-        // },
         {
           label: 'Best Seller',
           caption: '',
@@ -173,12 +166,21 @@ export default {
   methods: {
     prettyPriceUS,
     onRangeFilter(queryName, modelObj) {
-      // clear any existing filters
+      // clear any existing filters of the same type
       this.catalogStore.filters = this.catalogStore.filters.filter((query) => !query.includes(queryName));
 
       this.catalogStore.filters.push(`${queryName}[gte]=${this[modelObj].min}`);
       this.catalogStore.filters.push(`${queryName}[lte]=${this[modelObj].max}`);
       this.catalogStore.getProducts();
+    },
+    onFilterReset() {
+      this.catalogStore.clearFilters();
+      this.review_filter = { min: 0, max: 5 };
+      this.price_filter = { min: 0, max: this.catalogStore.mostExpensiveItemPrice };
+    },
+    getOptionGroupCaption(filter) {
+      console.log(filter);
+      return filter;
     },
   },
   mounted() {
@@ -196,7 +198,7 @@ export default {
         label: 'Category',
         caption: '',
         options: [...this.catalogStore.categories],
-        open: false,
+        open: true,
       });
     });
 
