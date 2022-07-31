@@ -6,7 +6,6 @@
         <div class="products__controls">
           <q-btn
             flat
-            dense
             round
             color="primary"
             icon="filter_alt"
