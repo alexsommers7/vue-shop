@@ -119,6 +119,7 @@ export const useCatalogStore = defineStore('catalog', {
     },
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
+      console.log(this.leftDrawerOpen);
     },
   },
 });
