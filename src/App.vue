@@ -1,5 +1,7 @@
 <template>
   <q-layout view="lHh lpR fFf" class="bg-grey-1">
+    <LayoutHeader></LayoutHeader>
+
     <ProductFilter></ProductFilter>
 
     <q-page-container>
@@ -30,6 +32,7 @@
 </template>
 
 <script>
+import LayoutHeader from './components/LayoutHeader';
 import ProductGrid from './components/ProductGrid';
 import ProductFilter from './components/ProductFilter';
 
@@ -66,6 +69,7 @@ export default {
     window.addEventListener('scroll', this.detectScroll, { passive: true });
   },
   components: {
+    LayoutHeader,
     ProductGrid,
     ProductFilter,
   },
