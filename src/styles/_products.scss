@@ -13,6 +13,10 @@
     justify-content: flex-end;
     flex-wrap: wrap;
 
+    // this is to fix Safari bug as described in ProductGrid.vue
+    position: sticky;
+    top: 0;
+
     .sort {
       flex-basis: 12rem;
       flex-shrink: 0;
