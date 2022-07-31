@@ -13,7 +13,7 @@
             class="filter q-mr-sm"
             aria-label="Toggle filter sidebar"
             title="Toggle filter sidebar"
-            @click="toggleLeftDrawer"
+            @click="catalogStore.toggleLeftDrawer"
           />
           <ProductSort></ProductSort>
         </div>
@@ -100,9 +100,6 @@ export default {
     },
     updateQuantity(item, qty) {
       item.qty = qty;
-    },
-    toggleLeftDrawer() {
-      this.catalogStore.leftDrawerOpen = !this.catalogStore.leftDrawerOpen;
     },
   },
   mounted() {

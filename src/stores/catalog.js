@@ -117,5 +117,8 @@ export const useCatalogStore = defineStore('catalog', {
       this.productAPIParams.page = val;
       this.getProducts();
     },
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
+    },
   },
 });
