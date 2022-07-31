@@ -1,5 +1,14 @@
 <template>
-  <q-drawer v-model="catalogStore.leftDrawerOpen" show-if-above bordered class="bg-white" :width="250">
+  <q-drawer
+    v-model="catalogStore.leftDrawerOpen"
+    show-if-above
+    no-swipe-open
+    no-swipe-close
+    no-swipe-backdrop
+    bordered
+    class="bg-white"
+    :width="250"
+  >
     <q-scroll-area class="fit">
       <div class="row justify-between items-baseline q-px-xs">
         <span class="text-h6 q-py-md q-px-sm">Filters</span>
