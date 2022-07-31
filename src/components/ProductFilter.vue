@@ -23,17 +23,19 @@
           :caption="`${prettyPriceUS(price_filter.min)} - ${prettyPriceUS(price_filter.max)}`"
           default-opened
         >
-          <q-range
-            class="q-py-lg q-px-md"
-            v-model="price_filter"
-            @change="$nextTick(() => onRangeFilter('sale_price', 'price_filter'))"
-            color="primary"
-            label-always
-            vertical
-            :min="0"
-            :max="catalogStore.mostExpensiveItemPrice"
-            :step="100"
-          />
+          <q-card>
+            <q-range
+              class="q-py-lg q-px-md"
+              v-model="price_filter"
+              @change="$nextTick(() => onRangeFilter('sale_price', 'price_filter'))"
+              color="primary"
+              label-always
+              vertical
+              :min="0"
+              :max="catalogStore.mostExpensiveItemPrice"
+              :step="100"
+            />
+          </q-card>
         </q-expansion-item>
 
         <q-expansion-item
@@ -43,30 +45,53 @@
           :caption="`${review_filter.min} - ${review_filter.max} Stars`"
           default-opened
         >
-          <q-range
-            class="q-py-lg q-px-md"
-            v-model="review_filter"
-            @change="$nextTick(() => onRangeFilter('reviews_average', 'review_filter'))"
-            color="primary"
-            :min="0"
-            :max="5"
-            :step="0.5"
-            marker-labels
-            vertical
-            dense
-            snap
-          >
-            <template v-slot:marker-label-group="{ markerMap }">
-              <div
-                class="row items-center no-wrap"
-                :class="markerMap[review_filter.min].classes"
-                :style="markerMap[review_filter.min].style"
-              >
-                <q-icon v-if="review_filter.min === 0" size="sm" color="yellow-14" name="star_outline" />
+          <q-card>
+            <q-range
+              class="q-py-lg q-px-md"
+              v-model="review_filter"
+              @change="$nextTick(() => onRangeFilter('reviews_average', 'review_filter'))"
+              color="primary"
+              :min="0"
+              :max="5"
+              :step="0.5"
+              marker-labels
+              vertical
+              dense
+              snap
+            >
+              <template v-slot:marker-label-group="{ markerMap }">
+                <div
+                  class="row items-center no-wrap"
+                  :class="markerMap[review_filter.min].classes"
+                  :style="markerMap[review_filter.min].style"
+                >
+                  <q-icon v-if="review_filter.min === 0" size="sm" color="yellow-14" name="star_outline" />
 
-                <template v-else>
+                  <template v-else>
+                    <q-icon
+                      v-for="i in Math.floor(review_filter.min)"
+                      :key="i"
+                      size="sm"
+                      color="yellow-14"
+                      name="star_rate"
+                    />
+
+                    <q-icon
+                      v-if="review_filter.min > Math.floor(review_filter.min)"
+                      size="sm"
+                      color="yellow-14"
+                      name="star_half"
+                    />
+                  </template>
+                </div>
+
+                <div
+                  class="row items-center no-wrap"
+                  :class="markerMap[review_filter.max].classes"
+                  :style="markerMap[review_filter.max].style"
+                >
                   <q-icon
-                    v-for="i in Math.floor(review_filter.min)"
+                    v-for="i in Math.floor(review_filter.max)"
                     :key="i"
                     size="sm"
                     color="yellow-14"
@@ -74,36 +99,15 @@
                   />
 
                   <q-icon
-                    v-if="review_filter.min > Math.floor(review_filter.min)"
+                    v-if="review_filter.max > Math.floor(review_filter.max)"
                     size="sm"
                     color="yellow-14"
                     name="star_half"
                   />
-                </template>
-              </div>
-
-              <div
-                class="row items-center no-wrap"
-                :class="markerMap[review_filter.max].classes"
-                :style="markerMap[review_filter.max].style"
-              >
-                <q-icon
-                  v-for="i in Math.floor(review_filter.max)"
-                  :key="i"
-                  size="sm"
-                  color="yellow-14"
-                  name="star_rate"
-                />
-
-                <q-icon
-                  v-if="review_filter.max > Math.floor(review_filter.max)"
-                  size="sm"
-                  color="yellow-14"
-                  name="star_half"
-                />
-              </div>
-            </template>
-          </q-range>
+                </div>
+              </template>
+            </q-range>
+          </q-card>
         </q-expansion-item>
 
         <q-expansion-item
