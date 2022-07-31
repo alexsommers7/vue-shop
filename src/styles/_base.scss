@@ -75,11 +75,6 @@ a:focus {
   color: $white;
 }
 
-.q-header {
-  // this is to fix Safari bug where click event was not registered due to header component overlapping
-  -webkit-transform: translate3d(0, 0, 0);
-}
-
 .q-footer {
   padding: 6px;
   text-align: center;
