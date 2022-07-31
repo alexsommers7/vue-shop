@@ -75,8 +75,9 @@ a:focus {
   color: $white;
 }
 
-.q-header .q-toolbar {
-  overflow: hidden;
+.q-header {
+  // this is to fix Safari bug where click event was not registered due to header component overlapping
+  height: 51px !important;
 }
 
 .q-footer {
