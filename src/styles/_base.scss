@@ -83,9 +83,3 @@ a:focus {
     color: #fff;
   }
 }
-
-body.desktop .q-focusable:focus > .q-focus-helper,
-body.desktop .q-manual-focusable--focused > .q-focus-helper,
-body.desktop .q-hoverable:hover > .q-focus-helper {
-  opacity: 0 !important;
-}
