@@ -12,10 +12,6 @@
             aria-label="Toggle filter sidebar"
             title="Toggle filter sidebar"
             @click="catalogStore.toggleLeftDrawer"
-            @touchstart="() => {}"
-            @touchend="() => {}"
-            @touchcancel="() => {}"
-            @touchmove="() => {}"
           />
           <ProductSort></ProductSort>
         </div>
