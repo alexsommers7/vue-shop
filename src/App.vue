@@ -67,6 +67,8 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.detectScroll, { passive: true });
+
+    document.querySelector('body').addEventListener('click', (e) => console.log(e.target));
   },
   components: {
     LayoutHeader,
