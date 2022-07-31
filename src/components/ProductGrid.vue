@@ -13,7 +13,7 @@
             aria-label="Toggle filter sidebar"
             title="Toggle filter sidebar"
             @click="catalogStore.toggleLeftDrawer"
-            style="z-index: 1999"
+            style="z-index: 2001"
           />
           <ProductSort></ProductSort>
         </div>
