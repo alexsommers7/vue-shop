@@ -4,6 +4,7 @@
     <div>
       <div class="row products text-center">
         <div class="products__controls">
+          <!-- z-index declaration is to fix Safari bug where click event was not registered due to header component -->
           <q-btn
             flat
             color="primary"
@@ -12,6 +13,7 @@
             aria-label="Toggle filter sidebar"
             title="Toggle filter sidebar"
             @click="catalogStore.toggleLeftDrawer"
+            style="z-index: 1999"
           />
           <ProductSort></ProductSort>
         </div>
