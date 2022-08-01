@@ -131,7 +131,12 @@
                   type="checkbox"
                   color="primary"
                   v-model="catalogStore.filters"
-                  @update:model-value="$nextTick(() => catalogStore.getProducts())"
+                  @update:model-value="
+                    $nextTick(() => {
+                      catalogStore.resetPagination();
+                      catalogStore.getProducts();
+                    })
+                  "
                 />
               </q-card-section>
             </q-scroll-area>

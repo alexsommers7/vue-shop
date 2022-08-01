@@ -42,7 +42,7 @@ export const useCatalogStore = defineStore('catalog', {
         Loading.show({ delay: 250 });
 
         // reset pagination
-        this.productAPIParams.page = 1;
+        // this.productAPIParams.page = 1;
 
         // remove null fields
         this.productAPIParams = removeObjNull(this.productAPIParams);
@@ -60,6 +60,9 @@ export const useCatalogStore = defineStore('catalog', {
       } catch (err) {
         console.error(err);
       }
+    },
+    getters: {
+      getParams: (state) => state.productAPIParams,
     },
     async getCategories() {
       try {
@@ -109,13 +112,12 @@ export const useCatalogStore = defineStore('catalog', {
       this.getProducts();
     },
     setSort(val) {
+      this.resetPagination();
       this.productAPIParams.sort = this.sortOptions.find((op) => op.value === val).query;
-      this.productAPIParams.page = 1;
       this.getProducts();
     },
-    paginate(val) {
-      this.productAPIParams.page = val;
-      this.getProducts();
+    resetPagination() {
+      this.productAPIParams.page = 1;
     },
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;

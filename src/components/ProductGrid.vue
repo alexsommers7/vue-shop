@@ -27,11 +27,12 @@
 
       <div class="row justify-center q-mx-auto q-pt-sm q-pb-lg" v-if="productsLocal.length">
         <q-pagination
-          v-model="currentPage"
+          v-model="catalogStore.productAPIParams.page"
           color="primary"
           :max="Math.ceil(catalogStore.itemsTotal / catalogStore.productAPIParams.limit)"
           :max-pages="4"
           boundary-numbers
+          @update:model-value="(val) => catalogStore.getProducts(val)"
         />
       </div>
 
@@ -60,7 +61,6 @@ export default {
   name: 'ProductGrid',
   data() {
     return {
-      currentPage: 1,
       modalData: {
         openTriggered: false,
         selectedImagePath: '',
@@ -75,13 +75,6 @@ export default {
     ...mapStores(useCartStore, useCatalogStore),
     productsLocal() {
       return [...this.catalogStore.items];
-    },
-  },
-  watch: {
-    currentPage: {
-      handler: function () {
-        this.catalogStore.paginate(this.currentPage);
-      },
     },
   },
   methods: {
