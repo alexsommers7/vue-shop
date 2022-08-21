@@ -163,6 +163,12 @@
       }
     }
   }
+
+  .q-carousel__slide {
+    background-size: contain;
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+  }
 }
 
 .product__review-summary {

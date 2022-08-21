@@ -1,6 +1,6 @@
 <template>
   <article class="product list-item">
-    <button :aria-label="`See Details: ${product.name}`" :title="`See Details: ${product.name}`">
+    <!-- <button :aria-label="`See Details: ${product.name}`" :title="`See Details: ${product.name}`">
       <img
         class="product__img"
         :src="product.image_main"
@@ -10,7 +10,18 @@
         aria-label="Product Details Coming Soon"
         title="Product Details Coming Soon"
       />
-    </button>
+    </button> -->
+
+    <div class="q-pa-md">
+      <q-carousel swipeable animated v-model="activeThumbnail" thumbnails infinite>
+        <q-carousel-slide
+          v-for="(image, i) in product.images.slice(0, 3)"
+          :key="image"
+          :name="i + 1"
+          :img-src="image"
+        />
+      </q-carousel>
+    </div>
 
     <div class="product__data">
       <p class="product__category">{{ product.category.name }}</p>
@@ -74,6 +85,7 @@ export default {
   emits: ['updateModal', 'updateQuantity'],
   data() {
     return {
+      activeThumbnail: 1,
       selectedQty: 1,
     };
   },
