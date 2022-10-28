@@ -13,7 +13,7 @@
     </button> -->
 
     <div class="q-pa-md">
-      <q-carousel swipeable animated v-model="activeThumbnail" thumbnails infinite>
+      <q-carousel swipeable animated v-model="activeThumbnail" thumbnails infinite navigation control-color="dark">
         <q-carousel-slide
           v-for="(image, i) in product.images.slice(0, 3)"
           :key="image"
