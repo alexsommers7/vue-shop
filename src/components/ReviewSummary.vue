@@ -95,7 +95,7 @@ export default {
         this.loading = true;
 
         const res = await fetch(
-          `https://storepi.herokuapp.com/api/v1/products/${this.product.id}/reviews?fields=rating,-user`
+          `https://storepi.vercel.app/api/v1/products/${this.product.id}/reviews?fields=rating`
         );
         const json = await res.json();
 

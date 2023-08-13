@@ -2,7 +2,7 @@
 
 ## Overview
 
-A mock ecommerce landing page that demonstrates the capabilities of **[StorePI](https://github.com/alexsommers7/StorePI)**. Features sorting, filtering, and cart functionality with more to come.
+A mock ecommerce landing page that demonstrates the capabilities of **[StorePI](https://github.com/alexsommers7/store-pi)**. Features sorting, filtering, and cart functionality with more to come.
 
 ## Project setup
 

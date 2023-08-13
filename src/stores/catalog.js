@@ -47,7 +47,7 @@ export const useCatalogStore = defineStore('catalog', {
         // remove null fields
         this.productAPIParams = removeObjNull(this.productAPIParams);
 
-        const url = `https://storepi.herokuapp.com/api/v1/products?${this.filters.join('&')}${
+        const url = `https://storepi.vercel.app/api/v1/products?${this.filters.join('&')}${
           this.filters.length ? '&' : ''
         }${new URLSearchParams(this.productAPIParams)}`;
         const res = await fetch(url);
@@ -66,7 +66,7 @@ export const useCatalogStore = defineStore('catalog', {
     },
     async getCategories() {
       try {
-        const res = await fetch('https://storepi.herokuapp.com/api/v1/categories');
+        const res = await fetch('https://storepi.vercel.app/api/v1/categories');
         const json = await res.json();
 
         // set as object with label & value for use as options prop
@@ -82,7 +82,7 @@ export const useCatalogStore = defineStore('catalog', {
     },
     async getBrands() {
       try {
-        const res = await fetch('https://storepi.herokuapp.com/api/v1/brands');
+        const res = await fetch('https://storepi.vercel.app/api/v1/brands');
         const json = await res.json();
 
         // set as object with label & value for use as options prop
@@ -98,7 +98,9 @@ export const useCatalogStore = defineStore('catalog', {
     },
     async getMostExpensiveProduct() {
       try {
-        const res = await fetch('https://storepi.herokuapp.com/api/v1/products?sort=-sale_price&limit=1');
+        const res = await fetch(
+          'https://storepi.vercel.app/api/v1/products?sort=-sale_price&limit=1'
+        );
         const json = await res.json();
 
         this.mostExpensiveItemPrice = json.data[0].sale_price;

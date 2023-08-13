@@ -14,7 +14,7 @@
         Developed by
         <a href="https://AlexSommers.com" target="_blank">Alex Sommers</a>
         with
-        <a href="https://github.com/alexsommers7/StorePI" target="_blank">StorePI</a>
+        <a href="https://github.com/alexsommers7/store-pi" target="_blank">StorePI</a>
       </p>
     </q-footer>
 
