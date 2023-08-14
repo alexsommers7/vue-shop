@@ -14,7 +14,7 @@ export const useCatalogStore = defineStore('catalog', {
         on_sale: null,
         sort: null,
         limit: 10,
-        page: 1,
+        offset: 0,
       },
       filters: [],
 
@@ -42,13 +42,26 @@ export const useCatalogStore = defineStore('catalog', {
         Loading.show({ delay: 250 });
 
         // reset pagination
-        // this.productAPIParams.page = 1;
+        // this.productAPIParams.offset = 0;
 
         // remove null fields
         this.productAPIParams = removeObjNull(this.productAPIParams);
 
-        const url = `https://storepi.vercel.app/api/v1/products?${this.filters.join('&')}${
-          this.filters.length ? '&' : ''
+        let cleanFilters = this.filters;
+
+        // check for multiple instances of category_id or brand_id and join duplicates into a single key e.g. category_id=1&category_id=2 => category_id=1,2
+        const potentialDuplicates = ['category_id', 'brand_id'];
+
+        potentialDuplicates.forEach((key) => {
+          const filterKeys = this.filters.filter((f) => f.startsWith(key));
+          if (filterKeys.length > 1) {
+            cleanFilters = cleanFilters.filter((f) => !f.startsWith(key));
+            cleanFilters.push(`${key}=${filterKeys.map((f) => f.split('=')[1]).join(',')}`);
+          }
+        });
+
+        const url = `https://storepi.vercel.app/api/v1/products?${cleanFilters.join('&')}${
+          cleanFilters.length ? '&' : ''
         }${new URLSearchParams(this.productAPIParams)}`;
         const res = await fetch(url);
         const json = await res.json();
@@ -70,10 +83,10 @@ export const useCatalogStore = defineStore('catalog', {
         const json = await res.json();
 
         // set as object with label & value for use as options prop
-        this.categories = json.data.map(({ _id, name }) => {
+        this.categories = json.data.map(({ id, name }) => {
           return {
             label: name,
-            value: `category=${_id}`,
+            value: `category_id=${id}`,
           };
         });
       } catch (err) {
@@ -86,10 +99,11 @@ export const useCatalogStore = defineStore('catalog', {
         const json = await res.json();
 
         // set as object with label & value for use as options prop
-        this.brands = json.data.map((brand) => {
+        this.brands = json.data.map(({ id, name }) => {
           return {
-            label: brand,
-            value: `brand=${brand.split(' ').join('-')}`,
+            label: name,
+            id,
+            value: `brand_id=${id}`,
           };
         });
       } catch (err) {
@@ -119,7 +133,7 @@ export const useCatalogStore = defineStore('catalog', {
       this.getProducts();
     },
     resetPagination() {
-      this.productAPIParams.page = 1;
+      this.productAPIParams.offset = 0;
     },
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;

@@ -12,7 +12,12 @@
     <q-scroll-area class="fit">
       <div class="row justify-between items-center q-px-xs">
         <span class="text-h6 q-py-md q-px-sm">Filters</span>
-        <q-btn unelevated label="Reset All" class="text-caption text-underline" @click="onFilterReset()"></q-btn>
+        <q-btn
+          unelevated
+          label="Reset All"
+          class="text-caption text-underline"
+          @click="onFilterReset()"
+        ></q-btn>
       </div>
 
       <q-list padding class="text-grey-8 q-pt-none">
@@ -65,7 +70,12 @@
                   :class="markerMap[review_filter.min].classes"
                   :style="markerMap[review_filter.min].style"
                 >
-                  <q-icon v-if="review_filter.min === 0" size="sm" color="yellow-14" name="star_outline" />
+                  <q-icon
+                    v-if="review_filter.min === 0"
+                    size="sm"
+                    color="yellow-14"
+                    name="star_outline"
+                  />
 
                   <template v-else>
                     <q-icon
@@ -186,10 +196,12 @@ export default {
     prettyPriceUS,
     onRangeFilter(queryName, modelObj) {
       // clear any existing filters of the same type
-      this.catalogStore.filters = this.catalogStore.filters.filter((query) => !query.includes(queryName));
+      this.catalogStore.filters = this.catalogStore.filters.filter(
+        (query) => !query.includes(queryName)
+      );
 
-      this.catalogStore.filters.push(`${queryName}[gte]=${this[modelObj].min}`);
-      this.catalogStore.filters.push(`${queryName}[lte]=${this[modelObj].max}`);
+      this.catalogStore.filters.push(`${queryName}_greater_than_or_equal_to=${this[modelObj].min}`);
+      this.catalogStore.filters.push(`${queryName}_less_than_or_equal_to=${this[modelObj].max}`);
       this.catalogStore.getProducts();
     },
     onFilterReset() {
