@@ -82,7 +82,7 @@ export default {
     truncTitle,
     updateModal(item) {
       this.modalData = {}; // reset in case same item is clicked on
-      this.modalData.selectedImagePath = item.image_main;
+      this.modalData.selectedImagePath = item.images[0];
       this.modalData.selectedImageAlt = `Image of ${item.name}`;
       this.modalData.selectedTitle = item.name;
       this.modalData.selectedPrice = item.sale_price;

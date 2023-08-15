@@ -48,7 +48,7 @@
                 </strong>
               </p>
 
-              <img :src="cartItem.image_main" :alt="cartItem.name" />
+              <img :src="cartItem.images[0]" :alt="cartItem.name" />
             </div>
           </li>
         </ul>

@@ -32,7 +32,7 @@
                   <q-item class="q-py-md q-px-md">
                     <q-item-section thumbnail>
                       <q-avatar square size="45px">
-                        <img :src="item.image_main" alt="" draggable="false" />
+                        <img :src="item.images[0]" alt="" draggable="false" />
                       </q-avatar>
                     </q-item-section>
 

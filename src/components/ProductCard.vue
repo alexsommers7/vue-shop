@@ -3,7 +3,7 @@
     <!-- <button :aria-label="`See Details: ${product.name}`" :title="`See Details: ${product.name}`">
       <img
         class="product__img"
-        :src="product.image_main"
+        :src="product.images[0]"
         :alt="`${product.name}`"
         :data-sku="product.sku"
         @click="updateModal(product)"
