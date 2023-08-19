@@ -82,6 +82,10 @@ a:focus {
   }
 }
 
+.q-toolbar {
+  min-height: 48px;
+}
+
 .q-page-container {
   // this also to fix the Safari bug
   @media all and (max-width: 700px) {

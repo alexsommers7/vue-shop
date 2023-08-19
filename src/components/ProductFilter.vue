@@ -10,8 +10,8 @@
     :width="250"
   >
     <q-scroll-area class="fit">
-      <div class="row justify-between items-center q-px-xs">
-        <span class="text-h6 q-py-md q-px-sm">Filters</span>
+      <div class="row justify-between items-center q-px-xs q-py-sm">
+        <span class="text-h6 q-px-sm">Filters</span>
         <q-btn
           unelevated
           label="Reset All"

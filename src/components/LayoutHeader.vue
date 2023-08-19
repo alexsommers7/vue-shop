@@ -5,14 +5,20 @@
 
       <div class="q-gutter-sm row items-center no-wrap q-px-sm">
         <q-btn round dense unelevated color="grey-8" icon="shopping_cart">
-          <q-badge color="red" text-color="white" floating>{{ cartStore.nonUniqueCartItemCount }}</q-badge>
+          <q-badge color="red" text-color="white" floating>{{
+            cartStore.nonUniqueCartItemCount
+          }}</q-badge>
           <q-menu style="width: min(400px, 80vw)">
             <q-toolbar
               class="row bg-primary text-white items-start justify-between q-px-md q-py-none"
               style="z-index: 1999"
             >
-              <q-toolbar-title class="text-body1">Cart ({{ cartStore.nonUniqueCartItemCount }})</q-toolbar-title>
-              <q-toolbar-title class="text-right text-body1">{{ prettyPriceUS(cartStore.total) }}</q-toolbar-title>
+              <q-toolbar-title class="text-body1"
+                >Cart ({{ cartStore.nonUniqueCartItemCount }})</q-toolbar-title
+              >
+              <q-toolbar-title class="text-right text-body1">{{
+                prettyPriceUS(cartStore.total)
+              }}</q-toolbar-title>
             </q-toolbar>
             <q-scroll-area
               :style="`height: ${cartStore.uniqueCartItemCount * 83}px; max-height: 300px;`"
