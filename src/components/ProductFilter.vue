@@ -202,6 +202,7 @@ export default {
 
       this.catalogStore.filters.push(`${queryName}_greater_than_or_equal_to=${this[modelObj].min}`);
       this.catalogStore.filters.push(`${queryName}_less_than_or_equal_to=${this[modelObj].max}`);
+      this.catalogStore.resetPagination();
       this.catalogStore.getProducts();
     },
     onFilterReset() {

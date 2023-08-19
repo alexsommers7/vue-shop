@@ -15,6 +15,7 @@ export const useCatalogStore = defineStore('catalog', {
         sort: null,
         limit: 10,
         offset: 0,
+        page: 1,
       },
       filters: [],
 
@@ -41,11 +42,11 @@ export const useCatalogStore = defineStore('catalog', {
       try {
         Loading.show({ delay: 250 });
 
-        // reset pagination
-        // this.productAPIParams.offset = 0;
+        const paramsArg = removeObjNull(this.productAPIParams);
 
-        // remove null fields
-        this.productAPIParams = removeObjNull(this.productAPIParams);
+        // API doesn't expect page param
+        paramsArg.offset = paramsArg.limit * (paramsArg.page - 1); // page is not 0 indexed
+        delete paramsArg.page;
 
         let cleanFilters = this.filters;
 
@@ -62,12 +63,17 @@ export const useCatalogStore = defineStore('catalog', {
 
         const url = `https://storepi.vercel.app/api/v1/products?${cleanFilters.join('&')}${
           cleanFilters.length ? '&' : ''
-        }${new URLSearchParams(this.productAPIParams)}`;
+        }${new URLSearchParams(paramsArg)}`;
         const res = await fetch(url);
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
         const json = await res.json();
 
         this.items = json.data.map((obj) => ({ ...obj, quantity: 1 }));
-        this.itemsTotal = json.total;
+        this.itemsTotal = json.count;
 
         Loading.hide();
       } catch (err) {
@@ -133,7 +139,7 @@ export const useCatalogStore = defineStore('catalog', {
       this.getProducts();
     },
     resetPagination() {
-      this.productAPIParams.offset = 0;
+      this.productAPIParams.page = 1;
     },
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;

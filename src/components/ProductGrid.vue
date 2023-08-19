@@ -27,7 +27,7 @@
 
       <div class="row justify-center q-mx-auto q-pt-sm q-pb-lg" v-if="productsLocal.length">
         <q-pagination
-          v-model="catalogStore.productAPIParams.offset"
+          v-model="catalogStore.productAPIParams.page"
           color="primary"
           :max="Math.ceil(catalogStore.itemsTotal / catalogStore.productAPIParams.limit)"
           :max-pages="4"
